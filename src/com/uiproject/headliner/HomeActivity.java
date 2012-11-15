@@ -1,6 +1,5 @@
 package com.uiproject.headliner;
 
-
 import java.util.ArrayList;
 
 import com.uiproject.headliner.dragdrop.DragNDropListActivity;
@@ -10,6 +9,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
@@ -19,11 +19,9 @@ import android.widget.TabHost.TabSpec;
 public class HomeActivity extends TabActivity {
 
 	private TabHost th;
-	private String topics[] = { "topic 1", "topic 2", "topic 3",
-			"topic 1", "topic 2", "topic 3",
-			"topic 1", "topic 2", "topic 3"};
-	
-	private final String TOPICS = "TOPICS";
+	private String topics[] = Data.topics;
+
+	ArrayList<String> topicList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,14 +30,31 @@ public class HomeActivity extends TabActivity {
 
 		th = this.getTabHost();
 
-		for (int i = 0; i < topics.length; i++) {
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			topicList = bundle.getStringArrayList(Data.TOPICS);
+			topicList.toArray(topics);
+		}
+		
+		if (topicList == null) {
+			Log.d("topicList", "the list is null");
+			topicList = new ArrayList<String>();
+			for (int i = 0; i < topics.length; i++)
+				topicList.add(1 + topics[i]);
+		}
+
+		for (int i = 0; i < topicList.size(); i++) {
+			String item = topicList.get(i);
+			if (item.charAt(0) == '0')
+				continue;
+			item = item.substring(1);
 			TabSpec ts = th.newTabSpec("Tag" + i);
-			ts.setIndicator(topics[i]);
-			Intent intent = new Intent(this, ListActivity.class);
-			Bundle bundle = new Bundle();
-			bundle.putInt("topics", i);
-			intent.putExtra("param", bundle);
-			ts.setContent(intent);
+			ts.setIndicator(item);
+			Intent tmpIntent = new Intent(this, ListActivity.class);
+			Bundle tmpBundle = new Bundle();
+			tmpBundle.putInt("topics", i);
+			tmpIntent.putExtra("param", tmpBundle);
+			ts.setContent(tmpIntent);
 			th.addTab(ts);
 		}
 	}
@@ -71,10 +86,10 @@ public class HomeActivity extends TabActivity {
 		case R.id.menu_settings: {
 			Intent intent = new Intent(this, DragNDropListActivity.class);
 			ArrayList<String> topicList = new ArrayList<String>();
-			for(int i = 0; i < topics.length; i++)
-				topicList.add(topics[i]);
+			for (int i = 0; i < topics.length; i++)
+				topicList.add(1 + topics[i]);
 			Bundle bundle = new Bundle();
-			bundle.putStringArrayList(TOPICS, topicList);
+			bundle.putStringArrayList(Data.TOPICS, topicList);
 			intent.putExtras(bundle);
 			startActivity(intent);
 			return true;

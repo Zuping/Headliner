@@ -12,11 +12,6 @@
         android:showAsAction="always">
     </item>
     <item
-        android:id="@+id/position"
-        android:icon="@drawable/ic_menu_position"
-        android:showAsAction="always">
-    </item>
-    <item
         android:id="@+id/menu_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
