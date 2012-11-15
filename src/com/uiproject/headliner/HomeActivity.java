@@ -1,5 +1,10 @@
 package com.uiproject.headliner;
 
+
+import java.util.ArrayList;
+
+import com.uiproject.headliner.dragdrop.DragNDropListActivity;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -14,7 +19,11 @@ import android.widget.TabHost.TabSpec;
 public class HomeActivity extends TabActivity {
 
 	private TabHost th;
-	private String topics[] = { "topic 1", "topic 2", "topic 3" };
+	private String topics[] = { "topic 1", "topic 2", "topic 3",
+			"topic 1", "topic 2", "topic 3",
+			"topic 1", "topic 2", "topic 3"};
+	
+	private final String TOPICS = "TOPICS";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,17 @@ public class HomeActivity extends TabActivity {
 		}
 		case R.id.favorite: {
 			Intent intent = new Intent(this, ListActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		case R.id.menu_settings: {
+			Intent intent = new Intent(this, DragNDropListActivity.class);
+			ArrayList<String> topicList = new ArrayList<String>();
+			for(int i = 0; i < topics.length; i++)
+				topicList.add(topics[i]);
+			Bundle bundle = new Bundle();
+			bundle.putStringArrayList(TOPICS, topicList);
+			intent.putExtras(bundle);
 			startActivity(intent);
 			return true;
 		}

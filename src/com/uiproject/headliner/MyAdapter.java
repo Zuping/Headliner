@@ -32,6 +32,7 @@ public class MyAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if(convertView == null) {
 			holder = new ViewHolder();
+			
 			convertView = inflater.inflate(R.layout.listitem, null);
 			holder.starBox = (CheckBox) convertView.findViewById(R.id.starCheckBox);
 			holder.title = (TextView) convertView.findViewById(R.id.titleTextView);
