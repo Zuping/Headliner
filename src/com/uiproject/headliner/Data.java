@@ -5,4 +5,5 @@ public class Data {
 			"Sports", "topic 1", "topic 2"};
 	
 	public static final String TOPICS = "TOPICS";
+	
 }
