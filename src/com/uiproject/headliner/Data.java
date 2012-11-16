@@ -6,4 +6,6 @@ public class Data {
 	
 	public static final String TOPICS = "TOPICS";
 	
+	public static Boolean flag = true;
+	
 }

@@ -180,7 +180,6 @@ public class ListActivity extends Activity {
 
 			holder.starBox
 					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(map));
-
 			return convertView;
 		}
 

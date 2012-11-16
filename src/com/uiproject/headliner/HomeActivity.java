@@ -2,12 +2,12 @@ package com.uiproject.headliner;
 
 import java.util.ArrayList;
 
-import com.uiproject.headliner.dragdrop.DragNDropListActivity;
-
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.TabActivity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,18 +29,33 @@ public class HomeActivity extends TabActivity {
 
 		th = this.getTabHost();
 
+		// test whether HomeAvtivity is activated by DragNDropActivity
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null) {
 			topicList = bundle.getStringArrayList(Data.TOPICS);
 			topicList.toArray(topics);
 		}
-		
-		if (topicList == null) {
-			Log.d("topicList", "the list is null");
-			topicList = new ArrayList<String>();
-			for (int i = 0; i < topics.length; i++)
-				topicList.add(1 + topics[i]);
-		}
+
+		if (Data.flag) {
+			DBHelper dbHelper = new DBHelper(this);
+			Cursor c = dbHelper.queryTopic();
+			if (c.getCount() == 0) {
+				// it is the first time that the user is using this app
+				if (topicList == null) {
+					Log.d("topicList", "the list is null");
+					topicList = new ArrayList<String>();
+					for (int i = 0; i < topics.length; i++)
+						topicList.add(1 + topics[i]);
+				}
+			} else {
+				while(c.moveToNext()) {
+					char checked = (c.getInt(1) == 0 ? '0' : '1');
+					String topic = c.getString(2);
+					topicList.add(checked + topic);
+				}
+			}
+		} else
+			Data.flag = false;
 
 		for (int i = 0; i < topicList.size(); i++) {
 			String item = topicList.get(i);
@@ -83,10 +98,7 @@ public class HomeActivity extends TabActivity {
 			return true;
 		}
 		case R.id.menu_settings: {
-			Intent intent = new Intent(this, DragNDropListActivity.class);
-			ArrayList<String> topicList = new ArrayList<String>();
-			for (int i = 0; i < topics.length; i++)
-				topicList.add(1 + topics[i]);
+			Intent intent = new Intent(this, DragListActivity.class);
 			Bundle bundle = new Bundle();
 			bundle.putStringArrayList(Data.TOPICS, topicList);
 			intent.putExtras(bundle);
@@ -96,5 +108,25 @@ public class HomeActivity extends TabActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+//		DBHelper dbHelper = new DBHelper(this);
+//		dbHelper.deleteTopic();
+//		for(int i = 0; i < topicList.size(); i++) {
+//			ContentValues values = new ContentValues();
+//			String item = topicList.get(i);
+//			if(item.charAt(0) == '0') {
+//				values.put("checked", 0);
+//			} else {
+//				values.put("checked", 1);
+//			}
+//			item = item.substring(1);
+//			values.put("topic", item);
+//			dbHelper.insertTopic(values);
+//		}
 	}
 }
