@@ -6,7 +6,6 @@ import com.uiproject.headliner.dragdrop.DragNDropListActivity;
 
 import android.os.Bundle;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.util.Log;
