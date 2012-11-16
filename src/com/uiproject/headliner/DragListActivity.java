@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -136,7 +137,7 @@ public class DragListActivity extends Activity {
 			else
 				holder.checkbox.setChecked(false);
 			holder.checkbox
-					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(position));
+					.setOnClickListener(new MyOnClickListener(position));
 
 			holder.text.setText((String) map.get("topic"));
 			return convertView;
@@ -157,25 +158,26 @@ public class DragListActivity extends Activity {
 			return 0;
 		}
 
-		private class MyOnCheckedChangeListener implements
-				OnCheckedChangeListener {
+		private class MyOnClickListener implements OnClickListener {
 			private HashMap<String, Object> map;
 
-			public MyOnCheckedChangeListener(int position) {
+			public MyOnClickListener(int position) {
 				map = mapList.get(position);
 			}
-
-			public void onCheckedChanged(CompoundButton checkbox,
-					boolean isChecked) {
-				if (isChecked) {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				CheckBox checkbox = (CheckBox) view;
+				if(checkbox.isChecked()) {
 					map.remove("checked");
 					map.put("checked", true);
-				} else {
+				}else {
 					map.remove("checked");
 					map.put("checked", false);
 				}
 				notifyDataSetChanged();
-			}
+			}		
 		}
 
 		private class ViewHolder {
