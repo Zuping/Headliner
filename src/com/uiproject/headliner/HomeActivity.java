@@ -27,6 +27,8 @@ public class HomeActivity extends TabActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
+		Data.init();
+		
 		th = this.getTabHost();
 
 		// test whether HomeAvtivity is activated by DragNDropActivity
@@ -65,9 +67,7 @@ public class HomeActivity extends TabActivity {
 			TabSpec ts = th.newTabSpec("Tag" + i);
 			ts.setIndicator(item);
 			Intent tmpIntent = new Intent(this, ListActivity.class);
-			Bundle tmpBundle = new Bundle();
-			tmpBundle.putInt("topics", i);
-			tmpIntent.putExtra("param", tmpBundle);
+			tmpIntent.putExtra(Data.TAB_KEY, topicList.get(i));
 			ts.setContent(tmpIntent);
 			th.addTab(ts);
 		}

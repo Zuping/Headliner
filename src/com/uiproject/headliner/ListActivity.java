@@ -37,10 +37,12 @@ import android.widget.Toast;
 
 public class ListActivity extends Activity {
 
-	MyAdapter myAdapter;
-	private List<String> stringList;
-	private List<Map<String, Object>> listItems;
+	private MyAdapter myAdapter;
 	private ListView listView;
+	
+	private List<Map<String, Object>> listItems;
+	private List<Map<String, Object>> favoriteList;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -72,8 +74,7 @@ public class ListActivity extends Activity {
 
 	public void getData() {
 		Intent intent = getIntent();
-		Bundle bundle = intent.getExtras();
-		stringList = bundle.getStringArrayList(Data.TOPICS);
+		String topic = intent.getStringExtra(Data.TOPICS);
 		listItems = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < 10; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -205,9 +206,15 @@ public class ListActivity extends Activity {
 				if (checkbox.isChecked()) {
 					map.remove("starBox");
 					map.put("starBox", true);
+					favoriteList.add(map);
 				} else {
 					map.remove("starBox");
 					map.put("starBox", false);
+					for(int i = 0; i < favoriteList.size(); i++) {
+						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList.get(i);
+						if(((String) _map.get("url")).equals((String) map.get("url")))
+							favoriteList.remove(_map);
+					}
 				}
 			}
 		}

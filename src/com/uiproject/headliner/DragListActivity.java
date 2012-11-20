@@ -2,7 +2,6 @@ package com.uiproject.headliner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.uiproject.headliner.view.DragListView;
 
@@ -19,8 +18,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 public class DragListActivity extends Activity {
@@ -117,7 +114,6 @@ public class DragListActivity extends Activity {
 			this.notifyDataSetChanged();
 		}
 
-		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
@@ -143,17 +139,14 @@ public class DragListActivity extends Activity {
 			return convertView;
 		}
 
-		@Override
 		public int getCount() {
 			return mapList.size();
 		}
 
-		@Override
 		public HashMap<String, Object> getItem(int position) {
 			return mapList.get(position);
 		}
 
-		@Override
 		public long getItemId(int position) {
 			return 0;
 		}
@@ -165,9 +158,7 @@ public class DragListActivity extends Activity {
 				map = mapList.get(position);
 			}
 			
-			@Override
 			public void onClick(View view) {
-				// TODO Auto-generated method stub
 				CheckBox checkbox = (CheckBox) view;
 				if(checkbox.isChecked()) {
 					map.remove("checked");
