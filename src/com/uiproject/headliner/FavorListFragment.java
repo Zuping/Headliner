@@ -33,7 +33,6 @@ public class FavorListFragment extends ListFragment {
 	private MyAdapter myAdapter;
 	private ListView listView;
 	
-	private List<HashMap<String, Object>> listItems;
 	private List<HashMap<String, Object>> favoriteList;
 	
 	public FavorListFragment(String _topic) {
@@ -44,7 +43,11 @@ public class FavorListFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-
+		
+		getData();
+		myAdapter = new MyAdapter(getActivity());
+		setListAdapter(myAdapter);
+		
 		return inflater.inflate(R.layout.activity_list, container, false);
 	}
 	
@@ -52,28 +55,23 @@ public class FavorListFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		listView = getListView();;
-		getData();
-		listView.setMultiChoiceModeListener(new ModeCallback());
-		myAdapter = new MyAdapter(getActivity(), listItems);
+		listView = getListView();
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		listView.setAdapter(myAdapter);
-
+		listView.setMultiChoiceModeListener(new ModeCallback());
 		registerForContextMenu(listView);
 	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		HashMap<String, Object> map = (HashMap<String, Object>) listItems
+		HashMap<String, Object> map = (HashMap<String, Object>) favoriteList
 				.get(position);
-		Log.d("list", (String) map.get("abstract"));
 		Uri webpage = Uri.parse("http://www.android.com");
 		Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
 		startActivity(webIntent);
 	}
 	
 	public void getData() {
-		System.out.println(topic);
+//		System.out.println(topic);
 		if(topic.equals(Data.topics[0])) {
 			favoriteList = Data.trendingFavorList;
 		} else if(topic.equals(Data.topics[1])) {
@@ -140,16 +138,13 @@ public class FavorListFragment extends ListFragment {
 	private class MyAdapter extends BaseAdapter {
 
 		private LayoutInflater inflater;
-		private List<HashMap<String, Object>> listItem;
 
-		public MyAdapter(final Context context,
-				final List<HashMap<String, Object>> _listItem) {
+		public MyAdapter(final Context context) {
 			inflater = LayoutInflater.from(context);
-			listItem = _listItem;
 		}
 
 		public int getCount() {
-			return listItem.size();
+			return favoriteList.size();
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -169,7 +164,7 @@ public class FavorListFragment extends ListFragment {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			HashMap<String, Object> map = (HashMap<String, Object>) listItem
+			HashMap<String, Object> map = (HashMap<String, Object>) favoriteList
 					.get(position);
 			if ((Boolean) map.get("starBox"))
 				holder.starBox.setChecked(true);

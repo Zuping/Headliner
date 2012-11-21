@@ -38,7 +38,7 @@ public class HomeActivity extends TabActivity {
 				continue;
 			TabSpec ts = th.newTabSpec("Tag" + i);
 			ts.setIndicator((String) map.get(Data.TOPICS));
-			Intent tmpIntent = new Intent(this, ListActivity.class);
+			Intent tmpIntent = new Intent(this, MyListActivity.class);
 			tmpIntent.putExtra(Data.TAB_KEY, (String) map.get(Data.TOPICS));
 			ts.setContent(tmpIntent);
 			th.addTab(ts);

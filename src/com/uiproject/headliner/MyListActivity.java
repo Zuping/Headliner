@@ -6,6 +6,7 @@ import java.util.List;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -26,7 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ListActivity extends Activity {
+public class MyListActivity extends ListActivity {
 
 	private MyAdapter myAdapter;
 	private ListView listView;
@@ -39,7 +40,7 @@ public class ListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list);
-		listView = (ListView) findViewById(R.id.listView);
+		listView = getListView();
 		getData();
 		listView.setMultiChoiceModeListener(new ModeCallback());
 		myAdapter = new MyAdapter(this, listItems);
@@ -101,13 +102,13 @@ public class ListActivity extends Activity {
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			switch (item.getItemId()) {
 			case R.id.share:
-				Toast.makeText(ListActivity.this,
+				Toast.makeText(MyListActivity.this,
 						"Shared " + listView.getCheckedItemCount() + " items",
 						Toast.LENGTH_SHORT).show();
 				mode.finish();
 				break;
 			default:
-				Toast.makeText(ListActivity.this, "Clicked " + item.getTitle(),
+				Toast.makeText(MyListActivity.this, "Clicked " + item.getTitle(),
 						Toast.LENGTH_SHORT).show();
 				mode.finish();
 				break;

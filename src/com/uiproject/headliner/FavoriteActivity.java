@@ -29,7 +29,7 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 		
 		topicList = Data.topicList;
 
-		th = this.getTabHost();
+		th = getTabHost();
 		th.setup();
 		th.setOnTabChangedListener(tabChangeListener);
 		
@@ -56,24 +56,28 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 
 			FragmentTransaction ft = fm.beginTransaction();
 
-			List<FavorListFragment> fragmentList = new ArrayList<FavorListFragment>();
-			for (int i = 0; i < Data.topicList.size(); i++) {
+			for (int i = 0; i < Data.topics.length; i++) {
 				FavorListFragment fragment = (FavorListFragment) fm
 						.findFragmentByTag(Data.topics[i]);
-				fragmentList.add(fragment);
 				if (fragment != null)
 					ft.detach(fragment);
 			}
 
+			System.out.println(tabId);
+			
 			for (int i = 0; i < Data.topics.length; i++) {
 				if (tabId.equalsIgnoreCase(Data.topics[i])) {
-					if (fragmentList.get(i) == null) {
+					FavorListFragment fragment = (FavorListFragment) fm
+							.findFragmentByTag(Data.topics[i]);
+					if (fragment == null) {
 						ft.add(android.R.id.tabcontent, new FavorListFragment(
 								Data.topics[i]), Data.topics[i]);
+					} else {
+						ft.attach(fragment);
 					}
+					break;
 				}
 			}
-
 			ft.commit();
 		}
 	};
