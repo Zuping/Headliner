@@ -50,7 +50,6 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 
 	TabHost.OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
 
-		@Override
 		public void onTabChanged(String tabId) {
 			FragmentManager fm = getFragmentManager();
 
@@ -82,9 +81,9 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 		}
 	};
 
-	@Override
 	public View createTabContent(String tag) {
 		View v = new View(getBaseContext());
 		return v;
 	}
+	
 }

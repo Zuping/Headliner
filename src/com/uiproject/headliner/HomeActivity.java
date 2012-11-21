@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.app.ActionBar;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.TabActivity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -13,11 +15,13 @@ import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.TabHost;
+import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 
-public class HomeActivity extends TabActivity {
+public class HomeActivity extends TabActivity implements TabContentFactory {
 
 	private TabHost th;
 	private List<HashMap<String, Object>> topicList;
@@ -30,18 +34,49 @@ public class HomeActivity extends TabActivity {
 		Data.init();
 		topicList = Data.topicList;
 		
-		th = this.getTabHost();
+		th = getTabHost();
+		th.setup();
+				
+		TabHost.OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
+			public void onTabChanged(String tabId) {
+				FragmentManager fm = getFragmentManager();
 
-		for (int i = 0; i < topicList.size(); i++) {
-			HashMap<String, Object> map = topicList.get(i);
-			if (!(Boolean) map.get(Data.CHECKED))
-				continue;
-			TabSpec ts = th.newTabSpec("Tag" + i);
-			ts.setIndicator((String) map.get(Data.TOPICS));
-			Intent tmpIntent = new Intent(this, MyListActivity.class);
-			tmpIntent.putExtra(Data.TAB_KEY, (String) map.get(Data.TOPICS));
-			ts.setContent(tmpIntent);
-			th.addTab(ts);
+				FragmentTransaction ft = fm.beginTransaction();
+
+				for (int i = 0; i < Data.topics.length; i++) {
+					FavorListFragment fragment = (FavorListFragment) fm
+							.findFragmentByTag(Data.topics[i]);
+					if (fragment != null)
+						ft.detach(fragment);
+				}
+
+				System.out.println(tabId);
+				
+				for (int i = 0; i < Data.topics.length; i++) {
+					if (tabId.equalsIgnoreCase(Data.topics[i])) {
+						FavorListFragment fragment = (FavorListFragment) fm
+								.findFragmentByTag(Data.topics[i]);
+						if (fragment == null) {
+							ft.add(android.R.id.tabcontent, new FavorListFragment(
+									Data.topics[i]), Data.topics[i]);
+						} else {
+							ft.attach(fragment);
+						}
+						break;
+					}
+				}
+				ft.commit();
+			}
+		};
+		
+		th.setOnTabChangedListener(tabChangeListener);
+		
+		for(int i = 0; i < topicList.size(); i++) {
+			String topic = (String) topicList.get(i).get(Data.TOPICS);
+			TabSpec tabSpec = th.newTabSpec(topic);
+			tabSpec.setIndicator((String) topic);
+			tabSpec.setContent(this);
+			th.addTab(tabSpec);
 		}
 	}
 
@@ -97,5 +132,10 @@ public class HomeActivity extends TabActivity {
 //			values.put("topic", item);
 //			dbHelper.insertTopic(values);
 //		}
+	}
+
+	public View createTabContent(String arg0) {
+		View v = new View(getBaseContext());
+		return v;
 	}
 }
