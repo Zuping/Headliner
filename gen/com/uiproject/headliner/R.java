@@ -20,31 +20,28 @@ public final class R {
         public static final int icmpmove=0x7f020006;
     }
     public static final class id {
-        public static final int absTextView=0x7f07000f;
-        public static final int addToBagButton=0x7f070007;
-        public static final int dateTextView=0x7f070010;
-        public static final int done=0x7f070018;
-        public static final int drag_list=0x7f070009;
-        public static final int drag_list_item_text=0x7f07000b;
-        public static final int facebook=0x7f070016;
-        public static final int favorite=0x7f070015;
+        public static final int absTextView=0x7f07000c;
+        public static final int addToBagButton=0x7f070004;
+        public static final int dateTextView=0x7f07000d;
+        public static final int done=0x7f070015;
+        public static final int drag_list=0x7f070006;
+        public static final int drag_list_item_text=0x7f070008;
+        public static final int facebook=0x7f070013;
+        public static final int favorite=0x7f070012;
         public static final int horizontalScrollView1=0x7f070000;
-        public static final int item_image=0x7f07000c;
-        public static final int listView=0x7f070004;
-        public static final int ll=0x7f070005;
-        public static final int menu_settings=0x7f070013;
-        public static final int quantity=0x7f070008;
-        public static final int search=0x7f070014;
-        public static final int share=0x7f070012;
-        public static final int specialInsButton=0x7f070006;
-        public static final int starCheckBox=0x7f07000d;
-        public static final int tab1=0x7f070001;
-        public static final int tab2=0x7f070002;
-        public static final int tab3=0x7f070003;
-        public static final int titleTextView=0x7f07000e;
-        public static final int toast=0x7f070011;
-        public static final int topicCheckBox=0x7f07000a;
-        public static final int twitter=0x7f070017;
+        public static final int item_image=0x7f070009;
+        public static final int listView=0x7f070001;
+        public static final int ll=0x7f070002;
+        public static final int menu_settings=0x7f070010;
+        public static final int quantity=0x7f070005;
+        public static final int search=0x7f070011;
+        public static final int share=0x7f07000f;
+        public static final int specialInsButton=0x7f070003;
+        public static final int starCheckBox=0x7f07000a;
+        public static final int titleTextView=0x7f07000b;
+        public static final int toast=0x7f07000e;
+        public static final int topicCheckBox=0x7f070007;
+        public static final int twitter=0x7f070014;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
