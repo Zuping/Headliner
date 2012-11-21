@@ -1,9 +1,7 @@
 package com.uiproject.headliner;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,21 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnLongClickListener;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -40,8 +31,8 @@ public class ListActivity extends Activity {
 	private MyAdapter myAdapter;
 	private ListView listView;
 	
-	private List<Map<String, Object>> listItems;
-	private List<Map<String, Object>> favoriteList;
+	private List<HashMap<String, Object>> listItems;
+	private List<HashMap<String, Object>> favoriteList;
 	
 
 	@Override
@@ -74,16 +65,23 @@ public class ListActivity extends Activity {
 
 	public void getData() {
 		Intent intent = getIntent();
-		String topic = intent.getStringExtra(Data.TOPICS);
-		listItems = new ArrayList<Map<String, Object>>();
-		for (int i = 0; i < 10; i++) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("starBox", false);
-			map.put("title", "title " + i);
-			map.put("abstract",
-					"abstract abstract abstract abstract abstract abstract");
-			map.put("date", "11/4/2012");
-			listItems.add(map);
+		String topic = intent.getStringExtra(Data.TAB_KEY);
+		System.out.println(topic);
+		if(topic.equals(Data.topics[0])) {
+			listItems = Data.trendingList;
+			favoriteList = Data.trendingFavorList;
+		} else if(topic.equals(Data.topics[1])) {
+			listItems = Data.nationalList;
+			favoriteList = Data.nationaFavorlList;
+		} else if(topic.equals(Data.topics[2])) {
+			listItems = Data.internationalList;
+			favoriteList = Data.internationalFavorList;
+		} else if(topic.equals(Data.topics[3])) {
+			listItems = Data.sportList;
+			favoriteList = Data.sportFavorList;
+		} else {
+			listItems = Data.localList;
+			favoriteList = Data.localFavorList;
 		}
 	}
 
@@ -140,10 +138,10 @@ public class ListActivity extends Activity {
 	private class MyAdapter extends BaseAdapter {
 
 		private LayoutInflater inflater;
-		private List<Map<String, Object>> listItem;
+		private List<HashMap<String, Object>> listItem;
 
 		public MyAdapter(final Context context,
-				final List<Map<String, Object>> _listItem) {
+				final List<HashMap<String, Object>> _listItem) {
 			inflater = LayoutInflater.from(context);
 			listItem = _listItem;
 		}
@@ -212,7 +210,9 @@ public class ListActivity extends Activity {
 					map.put("starBox", false);
 					for(int i = 0; i < favoriteList.size(); i++) {
 						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList.get(i);
-						if(((String) _map.get("url")).equals((String) map.get("url")))
+						
+						// compare title here
+						if(((String) _map.get("title")).equals((String) map.get("title")))
 							favoriteList.remove(_map);
 					}
 				}

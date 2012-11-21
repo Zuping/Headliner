@@ -1,6 +1,8 @@
 package com.uiproject.headliner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -18,9 +20,7 @@ import android.widget.TabHost.TabSpec;
 public class HomeActivity extends TabActivity {
 
 	private TabHost th;
-	private String topics[] = Data.topics;
-
-	ArrayList<String> topicList;
+	private List<HashMap<String, Object>> topicList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,46 +28,18 @@ public class HomeActivity extends TabActivity {
 		setContentView(R.layout.activity_home);
 
 		Data.init();
+		topicList = Data.topicList;
 		
 		th = this.getTabHost();
 
-		// test whether HomeAvtivity is activated by DragNDropActivity
-		Bundle bundle = getIntent().getExtras();
-		if (bundle != null) {
-			topicList = bundle.getStringArrayList(Data.TOPICS);
-			topicList.toArray(topics);
-		}
-
-		if (Data.flag) {
-			DBHelper dbHelper = new DBHelper(this);
-			Cursor c = dbHelper.queryTopic();
-			if (c.getCount() == 0) {
-				// it is the first time that the user is using this app
-				if (topicList == null) {
-					Log.d("topicList", "the list is null");
-					topicList = new ArrayList<String>();
-					for (int i = 0; i < topics.length; i++)
-						topicList.add(1 + topics[i]);
-				}
-			} else {
-				while(c.moveToNext()) {
-					char checked = (c.getInt(1) == 0 ? '0' : '1');
-					String topic = c.getString(2);
-					topicList.add(checked + topic);
-				}
-			}
-		} else
-			Data.flag = false;
-
 		for (int i = 0; i < topicList.size(); i++) {
-			String item = topicList.get(i);
-			if (item.charAt(0) == '0')
+			HashMap<String, Object> map = topicList.get(i);
+			if (!(Boolean) map.get(Data.CHECKED))
 				continue;
-			item = item.substring(1);
 			TabSpec ts = th.newTabSpec("Tag" + i);
-			ts.setIndicator(item);
+			ts.setIndicator((String) map.get(Data.TOPICS));
 			Intent tmpIntent = new Intent(this, ListActivity.class);
-			tmpIntent.putExtra(Data.TAB_KEY, topicList.get(i));
+			tmpIntent.putExtra(Data.TAB_KEY, (String) map.get(Data.TOPICS));
 			ts.setContent(tmpIntent);
 			th.addTab(ts);
 		}
@@ -93,15 +65,12 @@ public class HomeActivity extends TabActivity {
 			return true;
 		}
 		case R.id.favorite: {
-			Intent intent = new Intent(this, ListActivity.class);
+			Intent intent = new Intent(this, FavoriteActivity.class);
 			startActivity(intent);
 			return true;
 		}
 		case R.id.menu_settings: {
 			Intent intent = new Intent(this, DragListActivity.class);
-			Bundle bundle = new Bundle();
-			bundle.putStringArrayList(Data.TOPICS, topicList);
-			intent.putExtras(bundle);
 			startActivity(intent);
 			return true;
 		}

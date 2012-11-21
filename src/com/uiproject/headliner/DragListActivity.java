@@ -2,6 +2,7 @@ package com.uiproject.headliner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.uiproject.headliner.view.DragListView;
 
@@ -23,29 +24,14 @@ import android.widget.TextView;
 public class DragListActivity extends Activity {
 
 	private DragListAdapter adapter = null;
-	private ArrayList<String> topics;
-	private ArrayList<HashMap<String, Object>> mapList;
+	private List<HashMap<String, Object>> mapList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.drag_list_activity);
 
-		Intent intent = getIntent();
-		Bundle bundle = intent.getExtras();
-		topics = (ArrayList<String>) bundle.get(Data.TOPICS);
-
-		mapList = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < topics.size(); i++) {
-			String item = topics.get(i);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			if (item.charAt(0) == '0')
-				map.put("checked", false);
-			else
-				map.put("checked", true);
-			map.put("topic", item.substring(1));
-			mapList.add(map);
-		}
+		mapList = Data.topicList;
 
 		DragListView dragListView = (DragListView) findViewById(R.id.drag_list);
 		adapter = new DragListAdapter(this);
@@ -128,14 +114,14 @@ public class DragListActivity extends Activity {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			HashMap<String, Object> map = mapList.get(position);
-			if ((Boolean) map.get("checked"))
+			if ((Boolean) map.get(Data.CHECKED))
 				holder.checkbox.setChecked(true);
 			else
 				holder.checkbox.setChecked(false);
 			holder.checkbox
 					.setOnClickListener(new MyOnClickListener(position));
 
-			holder.text.setText((String) map.get("topic"));
+			holder.text.setText((String) map.get(Data.TOPICS));
 			return convertView;
 		}
 
