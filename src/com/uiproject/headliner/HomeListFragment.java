@@ -62,7 +62,7 @@ public class HomeListFragment extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		HashMap<String, Object> map = (HashMap<String, Object>) favoriteList
+		HashMap<String, Object> map = (HashMap<String, Object>) newsList
 				.get(position);
 		Uri webpage = Uri.parse("http://www.android.com");
 		Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);

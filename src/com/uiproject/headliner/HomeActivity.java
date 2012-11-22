@@ -33,10 +33,10 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 
 		Data.init();
 		topicList = Data.topicList;
-		
+
 		th = getTabHost();
 		th.setup();
-				
+
 		TabHost.OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
 			public void onTabChanged(String tabId) {
 				FragmentManager fm = getFragmentManager();
@@ -44,21 +44,22 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 				FragmentTransaction ft = fm.beginTransaction();
 
 				for (int i = 0; i < Data.topics.length; i++) {
-					FavorListFragment fragment = (FavorListFragment) fm
+					HomeListFragment fragment = (HomeListFragment) fm
 							.findFragmentByTag(Data.topics[i]);
 					if (fragment != null)
 						ft.detach(fragment);
 				}
 
 				System.out.println(tabId);
-				
+
 				for (int i = 0; i < Data.topics.length; i++) {
 					if (tabId.equalsIgnoreCase(Data.topics[i])) {
-						FavorListFragment fragment = (FavorListFragment) fm
+						HomeListFragment fragment = (HomeListFragment) fm
 								.findFragmentByTag(Data.topics[i]);
 						if (fragment == null) {
-							ft.add(android.R.id.tabcontent, new FavorListFragment(
-									Data.topics[i]), Data.topics[i]);
+							ft.add(android.R.id.tabcontent,
+									new HomeListFragment(Data.topics[i]),
+									Data.topics[i]);
 						} else {
 							ft.attach(fragment);
 						}
@@ -68,10 +69,10 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 				ft.commit();
 			}
 		};
-		
+
 		th.setOnTabChangedListener(tabChangeListener);
-		
-		for(int i = 0; i < topicList.size(); i++) {
+
+		for (int i = 0; i < topicList.size(); i++) {
 			String topic = (String) topicList.get(i).get(Data.TOPICS);
 			TabSpec tabSpec = th.newTabSpec(topic);
 			tabSpec.setIndicator((String) topic);
@@ -113,25 +114,24 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-//		DBHelper dbHelper = new DBHelper(this);
-//		dbHelper.deleteTopic();
-//		for(int i = 0; i < topicList.size(); i++) {
-//			ContentValues values = new ContentValues();
-//			String item = topicList.get(i);
-//			if(item.charAt(0) == '0') {
-//				values.put("checked", 0);
-//			} else {
-//				values.put("checked", 1);
-//			}
-//			item = item.substring(1);
-//			values.put("topic", item);
-//			dbHelper.insertTopic(values);
-//		}
+		// DBHelper dbHelper = new DBHelper(this);
+		// dbHelper.deleteTopic();
+		// for(int i = 0; i < topicList.size(); i++) {
+		// ContentValues values = new ContentValues();
+		// String item = topicList.get(i);
+		// if(item.charAt(0) == '0') {
+		// values.put("checked", 0);
+		// } else {
+		// values.put("checked", 1);
+		// }
+		// item = item.substring(1);
+		// values.put("topic", item);
+		// dbHelper.insertTopic(values);
+		// }
 	}
 
 	public View createTabContent(String arg0) {
