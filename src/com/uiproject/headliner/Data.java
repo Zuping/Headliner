@@ -18,18 +18,23 @@ public class Data {
 	
 	public static List<HashMap<String, Object>> trendingList;
 	public static List<HashMap<String, Object>> trendingFavorList;
+	public static List<HashMap<String, Object>> trendingSearchList;
 	
 	public static List<HashMap<String, Object>> nationalList;
-	public static List<HashMap<String, Object>> nationaFavorlList;
+	public static List<HashMap<String, Object>> nationalFavorlList;
+	public static List<HashMap<String, Object>> nationalSearchlList;
 	
 	public static List<HashMap<String, Object>> internationalList;
 	public static List<HashMap<String, Object>> internationalFavorList;
+	public static List<HashMap<String, Object>> internationalSearchList;
 	
 	public static List<HashMap<String, Object>> sportList;
 	public static List<HashMap<String, Object>> sportFavorList;
+	public static List<HashMap<String, Object>> sportSearchList;
 	
 	public static List<HashMap<String, Object>> localList;
 	public static List<HashMap<String, Object>> localFavorList;
+	public static List<HashMap<String, Object>> localSearchList;
 	
 
 	
@@ -50,7 +55,7 @@ public class Data {
 		trendingFavorList = new ArrayList<HashMap<String, Object>>();
 		
 		nationalList = new ArrayList<HashMap<String, Object>>();
-		nationaFavorlList = new ArrayList<HashMap<String, Object>>();
+		nationalFavorlList = new ArrayList<HashMap<String, Object>>();
 		
 		internationalList = new ArrayList<HashMap<String, Object>>();
 		internationalFavorList = new ArrayList<HashMap<String, Object>>();
@@ -101,6 +106,59 @@ public class Data {
 					"local local local local local local");
 			local_map.put("date", "11/4/2012");
 			localList.add(local_map);			
+		}
+		
+	}
+	
+	public static void search(String key) {
+		trendingSearchList = new ArrayList<HashMap<String, Object>>();
+		for(int i = 0; i < trendingList.size(); i++) {
+			HashMap<String, Object> map = trendingList.get(i);
+			String title = (String) map.get("title");
+			String _abstract = (String) map.get("abstract");
+			if(title.indexOf(key) != -1 || _abstract.indexOf(key) != -1) {
+				trendingSearchList.add(map);
+			}
+		}
+		
+		nationalSearchlList = new ArrayList<HashMap<String, Object>>();
+		for(int i = 0; i < nationalList.size(); i++) {
+			HashMap<String, Object> map = nationalList.get(i);
+			String title = (String) map.get("title");
+			String _abstract = (String) map.get("abstract");
+			if(title.indexOf(key) != -1 || _abstract.indexOf(key) != -1) {
+				nationalSearchlList.add(map);
+			}
+		}
+		
+		internationalSearchList = new ArrayList<HashMap<String, Object>>();
+		for(int i = 0; i < internationalList.size(); i++) {
+			HashMap<String, Object> map = internationalList.get(i);
+			String title = (String) map.get("title");
+			String _abstract = (String) map.get("abstract");
+			if(title.indexOf(key) != -1 || _abstract.indexOf(key) != -1) {
+				internationalSearchList.add(map);
+			}
+		}
+		
+		sportSearchList = new ArrayList<HashMap<String, Object>>();
+		for(int i = 0; i < sportList.size(); i++) {
+			HashMap<String, Object> map = sportList.get(i);
+			String title = (String) map.get("title");
+			String _abstract = (String) map.get("abstract");
+			if(title.indexOf(key) != -1 || _abstract.indexOf(key) != -1) {
+				sportSearchList.add(map);
+			}
+		}
+		
+		localSearchList = new ArrayList<HashMap<String, Object>>();
+		for(int i = 0; i < localList.size(); i++) {
+			HashMap<String, Object> map = localList.get(i);
+			String title = (String) map.get("title");
+			String _abstract = (String) map.get("abstract");
+			if(title.indexOf(key) != -1 || _abstract.indexOf(key) != -1) {
+				localSearchList.add(map);
+			}
 		}
 	}
 	

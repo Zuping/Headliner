@@ -75,7 +75,7 @@ public class FavorListFragment extends ListFragment {
 		if(topic.equals(Data.topics[0])) {
 			favoriteList = Data.trendingFavorList;
 		} else if(topic.equals(Data.topics[1])) {
-			favoriteList = Data.nationaFavorlList;
+			favoriteList = Data.nationalFavorlList;
 		} else if(topic.equals(Data.topics[2])) {
 			favoriteList = Data.internationalFavorList;
 		} else if(topic.equals(Data.topics[3])) {
