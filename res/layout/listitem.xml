@@ -2,45 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" 
-    android:background="?android:attr/activatedBackgroundIndicator">
-
+    android:background="?android:attr/activatedBackgroundIndicator"
+    android:orientation="horizontal" >
+
     <CheckBox
         android:id="@+id/starCheckBox"
         style="?android:attr/starStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:focusable="false" />
 
     <TextView
-        android:id="@+id/titleTextView"
+        android:id="@+id/newsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/starCheckBox"
+        android:layout_toRightOf="@+id/newsIcon"
+        android:layout_centerVertical="true"
         android:focusable="false"
-        android:text="Title"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/absTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/titleTextView"
-        android:layout_below="@+id/titleTextView"
-        android:focusable="false"
+        android:layout_marginLeft="5dp"
         android:text="Abstract" />
 
-    <TextView
-        android:id="@+id/dateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/titleTextView"
-        android:layout_alignBottom="@+id/titleTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="24dp"
-        android:text="TextView" />
+    <ImageView
+        android:id="@+id/newsIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@+id/starCheckBox"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>

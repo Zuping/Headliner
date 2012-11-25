@@ -11,36 +11,46 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_action_search=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int ic_menu_done=0x7f020002;
-        public static final int ic_menu_favourite=0x7f020003;
-        public static final int ic_menu_position=0x7f020004;
-        public static final int ic_menu_share=0x7f020005;
-        public static final int icmpmove=0x7f020006;
+        public static final int abc_world_news=0x7f020000;
+        public static final int bbc_world_news=0x7f020001;
+        public static final int bloomberg_news=0x7f020002;
+        public static final int cbs_news=0x7f020003;
+        public static final int cnn_news=0x7f020004;
+        public static final int cnn_world_news=0x7f020005;
+        public static final int fox_news=0x7f020006;
+        public static final int ic_action_search=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int ic_menu_done=0x7f020009;
+        public static final int ic_menu_favourite=0x7f02000a;
+        public static final int ic_menu_position=0x7f02000b;
+        public static final int ic_menu_share=0x7f02000c;
+        public static final int icmpmove=0x7f02000d;
+        public static final int reuters=0x7f02000e;
+        public static final int startribune_news=0x7f02000f;
+        public static final int thenewyorktimes_news=0x7f020010;
+        public static final int wpt_news=0x7f020011;
     }
     public static final class id {
-        public static final int absTextView=0x7f08000b;
         public static final int addToBagButton=0x7f080003;
-        public static final int dateTextView=0x7f08000c;
-        public static final int done=0x7f080014;
+        public static final int done=0x7f080013;
         public static final int drag_list=0x7f080005;
         public static final int drag_list_item_text=0x7f080007;
-        public static final int facebook=0x7f080012;
-        public static final int favorite=0x7f080011;
+        public static final int facebook=0x7f080011;
+        public static final int favorite=0x7f080010;
         public static final int horizontalScrollView1=0x7f080000;
         public static final int item_image=0x7f080008;
         public static final int ll=0x7f080001;
-        public static final int menu_search=0x7f080010;
-        public static final int menu_settings=0x7f08000f;
+        public static final int menu_search=0x7f08000f;
+        public static final int menu_settings=0x7f08000e;
+        public static final int newsIcon=0x7f08000b;
+        public static final int newsTextView=0x7f08000a;
         public static final int quantity=0x7f080004;
-        public static final int share=0x7f08000e;
+        public static final int share=0x7f08000d;
         public static final int specialInsButton=0x7f080002;
         public static final int starCheckBox=0x7f080009;
-        public static final int titleTextView=0x7f08000a;
-        public static final int toast=0x7f08000d;
+        public static final int toast=0x7f08000c;
         public static final int topicCheckBox=0x7f080006;
-        public static final int twitter=0x7f080013;
+        public static final int twitter=0x7f080012;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;

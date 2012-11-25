@@ -10,9 +10,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
 import android.app.TabActivity;
+import android.content.Context;
 import android.view.Menu;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
@@ -44,7 +47,16 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_favorite, menu);
+		super.onCreateOptionsMenu(menu);
+		getMenuInflater().inflate(R.menu.context_menu, menu);
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setHomeButtonEnabled(true);
+		
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+	    searchView.setSubmitButtonEnabled(false);
 		return true;
 	}
 

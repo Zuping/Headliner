@@ -94,7 +94,6 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
 	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-	    searchView.setIconifiedByDefault(false);
 	    searchView.setSubmitButtonEnabled(false);
 	    
 		return true;

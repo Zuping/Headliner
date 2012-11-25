@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,14 +15,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class FavorListFragment extends ListFragment {
@@ -65,7 +63,7 @@ public class FavorListFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		HashMap<String, Object> map = (HashMap<String, Object>) favoriteList
 				.get(position);
-		Uri webpage = Uri.parse("http://www.android.com");
+		Uri webpage = Uri.parse((String) map.get("url"));
 		Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
 		startActivity(webIntent);
 	}
@@ -154,12 +152,10 @@ public class FavorListFragment extends ListFragment {
 				convertView = inflater.inflate(R.layout.listitem, null);
 				holder.starBox = (CheckBox) convertView
 						.findViewById(R.id.starCheckBox);
-				holder.title = (TextView) convertView
-						.findViewById(R.id.titleTextView);
-				holder.abstracts = (TextView) convertView
-						.findViewById(R.id.absTextView);
-				holder.date = (TextView) convertView
-						.findViewById(R.id.dateTextView);
+				holder.news = (TextView) convertView
+						.findViewById(R.id.newsTextView);
+				holder.image = (ImageView) convertView
+						.findViewById(R.id.newsIcon);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -170,12 +166,11 @@ public class FavorListFragment extends ListFragment {
 				holder.starBox.setChecked(true);
 			else
 				holder.starBox.setChecked(false);
-			holder.title.setText((String) map.get("title"));
-			holder.abstracts.setText((String) map.get("abstract"));
-			holder.date.setText((String) map.get("date"));
-
+			holder.news.setText((String) map.get("news"));
+			holder.image.setImageResource((Integer)map.get("image"));
 			holder.starBox
 					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(map));
+
 			return convertView;
 		}
 
@@ -218,9 +213,8 @@ public class FavorListFragment extends ListFragment {
 
 		private class ViewHolder {
 			public CheckBox starBox;
-			public TextView title;
-			public TextView abstracts;
-			public TextView date;
+			public TextView news;
+			public ImageView image;
 			public String url;
 		}
 

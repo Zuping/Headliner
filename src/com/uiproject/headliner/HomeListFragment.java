@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,7 +65,7 @@ public class HomeListFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		HashMap<String, Object> map = (HashMap<String, Object>) newsList
 				.get(position);
-		Uri webpage = Uri.parse("http://www.android.com");
+		Uri webpage = Uri.parse((String) map.get("url"));
 		Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
 		startActivity(webIntent);
 	}
@@ -158,12 +159,10 @@ public class HomeListFragment extends ListFragment {
 				convertView = inflater.inflate(R.layout.listitem, null);
 				holder.starBox = (CheckBox) convertView
 						.findViewById(R.id.starCheckBox);
-				holder.title = (TextView) convertView
-						.findViewById(R.id.titleTextView);
-				holder.abstracts = (TextView) convertView
-						.findViewById(R.id.absTextView);
-				holder.date = (TextView) convertView
-						.findViewById(R.id.dateTextView);
+				holder.news = (TextView) convertView
+						.findViewById(R.id.newsTextView);
+				holder.image = (ImageView) convertView
+						.findViewById(R.id.newsIcon);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -174,10 +173,8 @@ public class HomeListFragment extends ListFragment {
 				holder.starBox.setChecked(true);
 			else
 				holder.starBox.setChecked(false);
-			holder.title.setText((String) map.get("title"));
-			holder.abstracts.setText((String) map.get("abstract"));
-			holder.date.setText((String) map.get("date"));
-
+			holder.news.setText((String) map.get("news"));
+			holder.image.setImageResource((Integer)map.get("image"));
 			holder.starBox
 					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(map));
 			return convertView;
@@ -222,9 +219,8 @@ public class HomeListFragment extends ListFragment {
 
 		private class ViewHolder {
 			public CheckBox starBox;
-			public TextView title;
-			public TextView abstracts;
-			public TextView date;
+			public TextView news;
+			public ImageView image;
 			public String url;
 		}
 

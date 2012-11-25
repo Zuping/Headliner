@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.graphics.drawable.Drawable;
+
 public class Data {
 	
 	public static final String TOPICS = "TOPICS";
@@ -36,7 +38,6 @@ public class Data {
 	public static List<HashMap<String, Object>> localFavorList;
 	public static List<HashMap<String, Object>> localSearchList;
 	
-
 	
 	public static void init() {
 		
@@ -66,48 +67,33 @@ public class Data {
 		localList = new ArrayList<HashMap<String, Object>>();
 		localFavorList = new ArrayList<HashMap<String, Object>>();
 		
-		for(int i = 0; i < 10; i++) {
-			HashMap<String, Object> trending_map = new HashMap<String, Object>();
-			trending_map.put("starBox", false);
-			trending_map.put("title", "trending news " + i);
-			trending_map.put("abstract",
-					"trending trending trending trending trending trending");
-			trending_map.put("date", "11/4/2012");
-			trendingList.add(trending_map);
-			
-			HashMap<String, Object> national_map = new HashMap<String, Object>();
-			national_map.put("starBox", false);
-			national_map.put("title", "national news " + i);
-			national_map.put("abstract",
-					"national national national national national national");
-			national_map.put("date", "11/4/2012");
-			nationalList.add(national_map);
-			
-			HashMap<String, Object> international_map = new HashMap<String, Object>();
-			international_map.put("starBox", false);
-			international_map.put("title", "international news " + i);
-			international_map.put("abstract",
-					"international international international international international international");
-			international_map.put("date", "11/4/2012");
-			internationalList.add(international_map);
-			
-			HashMap<String, Object> sport_map = new HashMap<String, Object>();
-			sport_map.put("starBox", false);
-			sport_map.put("title", "sport news " + i);
-			sport_map.put("abstract",
-					"sport sport sport sport sport sport");
-			sport_map.put("date", "11/4/2012");
-			sportList.add(sport_map);
-			
-			HashMap<String, Object> local_map = new HashMap<String, Object>();
-			local_map.put("starBox", false);
-			local_map.put("title", "local news " + i);
-			local_map.put("abstract",
-					"local local local local local local");
-			local_map.put("date", "11/4/2012");
-			localList.add(local_map);			
-		}
+		// insert national news
+		insert(nationalList, News.National_News.CNN_National_news, News.National_News.CNN_National_url, R.drawable.cnn_news);
+		insert(nationalList, News.National_News.FoxNews_National_news, News.National_News.FoxNews_National_url, R.drawable.fox_news);
+		insert(nationalList, News.National_News.newyorktimes_National_news, News.National_News.newyorktimes_National_url, R.drawable.thenewyorktimes_news);
+		insert(nationalList, News.National_News.WashingtonPost_National_news, News.National_News.WashingtonPost_National_url, R.drawable.wpt_news);
 		
+		// insert local news
+		insert(localList, News.Local_News.StarTribune_Local_news, News.Local_News.StarTribune_Local_url, R.drawable.startribune_news);
+		
+		// insert international news
+		insert(internationalList, News.World_News.ABC_world_news, News.World_News.ABC_world_url, R.drawable.abc_world_news);
+		insert(internationalList, News.World_News.BBC_world_news, News.World_News.BBC_world_url, R.drawable.bbc_world_news);
+		insert(internationalList, News.World_News.Bloomberg_World_news, News.World_News.Bloomberg_World_url, R.drawable.bloomberg_news);
+		insert(internationalList, News.World_News.CBSnews_world_news, News.World_News.CBSnews_world_url, R.drawable.cbs_news);
+		insert(internationalList, News.World_News.CNN_world_news, News.World_News.CNN_world_url, R.drawable.cnn_world_news);
+		insert(internationalList, News.World_News.Reuters_World_news, News.World_News.Reuters_World_url, R.drawable.reuters);
+	}
+	
+	private static void insert(List<HashMap<String, Object>> list, String[] news, String[] url, int drawable) {
+		for(int i = 0; i < news.length; i++) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("starBox", false);
+			map.put("news", news[i]);
+			map.put("url", url[i]);
+			map.put("image", (Integer) drawable);
+			list.add(map);
+		}
 	}
 	
 	public static void search(String key) {
