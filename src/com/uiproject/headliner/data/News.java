@@ -1,4 +1,4 @@
-package com.uiproject.headliner;
+package com.uiproject.headliner.data;
 
 public class News {
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.uiproject.headliner.data.Data;
 
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -26,19 +27,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-public class FavorListFragment extends ListFragment {
-	
+public class SearchListFragment extends ListFragment {
 	private String topic;
-	
 	private MyAdapter myAdapter;
 	private ListView listView;
 	
+	private List<HashMap<String, Object>> searchList;
 	private List<HashMap<String, Object>> favoriteList;
 	
-	public FavorListFragment(String _topic) {
+	protected ActionMode mActionMode;
+	
+	public SearchListFragment(String _topic) {
 		topic = _topic;
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -63,28 +65,33 @@ public class FavorListFragment extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		HashMap<String, Object> map = (HashMap<String, Object>) favoriteList
+		HashMap<String, Object> map = (HashMap<String, Object>) searchList
 				.get(position);
 		Uri webpage = Uri.parse((String) map.get("url"));
 		Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
 		startActivity(webIntent);
 	}
 	
+	
 	public void getData() {
-//		System.out.println(topic);
 		if(topic.equals(Data.topics[0])) {
+			searchList = Data.trendingSearchList;
 			favoriteList = Data.trendingFavorList;
 		} else if(topic.equals(Data.topics[1])) {
+			searchList = Data.nationalSearchlList;
 			favoriteList = Data.nationalFavorlList;
 		} else if(topic.equals(Data.topics[2])) {
+			searchList = Data.internationalSearchList;
 			favoriteList = Data.internationalFavorList;
 		} else if(topic.equals(Data.topics[3])) {
+			searchList = Data.sportSearchList;
 			favoriteList = Data.sportFavorList;
 		} else {
+			searchList = Data.localSearchList;
 			favoriteList = Data.localFavorList;
 		}
 	}
-	
+
 	private class ModeCallback implements ListView.MultiChoiceModeListener {
 
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -144,7 +151,7 @@ public class FavorListFragment extends ListFragment {
 		}
 
 		public int getCount() {
-			return favoriteList.size();
+			return searchList.size();
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -162,7 +169,7 @@ public class FavorListFragment extends ListFragment {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			HashMap<String, Object> map = (HashMap<String, Object>) favoriteList
+			HashMap<String, Object> map = (HashMap<String, Object>) searchList
 					.get(position);
 			if ((Boolean) map.get("starBox"))
 				holder.starBox.setChecked(true);
@@ -172,7 +179,6 @@ public class FavorListFragment extends ListFragment {
 			holder.image.setImageResource((Integer)map.get("image"));
 			holder.starBox
 					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(map));
-
 			return convertView;
 		}
 
@@ -198,11 +204,11 @@ public class FavorListFragment extends ListFragment {
 				if (checkbox.isChecked()) {
 					map.remove("starBox");
 					map.put("starBox", true);
-					favoriteList.add(map);
+					searchList.add(map);
 				} else {
 					map.remove("starBox");
 					map.put("starBox", false);
-					for(int i = 0; i < favoriteList.size(); i++) {
+					for(int i = 0; i < searchList.size(); i++) {
 						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList.get(i);
 						
 						// compare title here
@@ -217,9 +223,7 @@ public class FavorListFragment extends ListFragment {
 			public CheckBox starBox;
 			public TextView news;
 			public ImageView image;
-			public String url;
 		}
 
 	}
-	
 }

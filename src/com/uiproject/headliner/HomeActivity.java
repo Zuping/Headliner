@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.uiproject.headliner.data.DBHelper;
+import com.uiproject.headliner.data.Data;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.FragmentManager;
@@ -33,7 +36,7 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 
-		Data.init();
+		Data.init(getApplicationContext());
 		topicList = Data.topicList;
 
 		th = getTabHost();
@@ -75,27 +78,55 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		th.setOnTabChangedListener(tabChangeListener);
 
 		for (int i = 0; i < topicList.size(); i++) {
-			String topic = (String) topicList.get(i).get(Data.TOPICS);
+			HashMap<String, Object> map = topicList.get(i);
+			if (!(Boolean) map.get("checked"))
+				continue;
+			String topic = (String) map.get(Data.TOPICS);
 			TabSpec tabSpec = th.newTabSpec(topic);
 			tabSpec.setIndicator((String) topic);
 			tabSpec.setContent(this);
 			th.addTab(tabSpec);
 		}
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
+
 		getMenuInflater().inflate(R.menu.context_menu, menu);
 		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
-		
+
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-	    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-	    searchView.setSubmitButtonEnabled(false);
-	    
+		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search)
+				.getActionView();
+		searchView
+				.setSearchableInfo(searchManager
+						.getSearchableInfo(new SearchableActivity()
+								.getComponentName()));
+		searchView.setIconifiedByDefault(false);
+
+		final Intent searchintent = new Intent(this, SearchableActivity.class);
+
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				searchintent.putExtra("query", query);
+				startActivity(searchintent);
+				return true;
+			}
+
+		});
+
 		return true;
 	}
 
@@ -126,20 +157,42 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		// DBHelper dbHelper = new DBHelper(this);
-		// dbHelper.deleteTopic();
-		// for(int i = 0; i < topicList.size(); i++) {
-		// ContentValues values = new ContentValues();
-		// String item = topicList.get(i);
-		// if(item.charAt(0) == '0') {
-		// values.put("checked", 0);
-		// } else {
-		// values.put("checked", 1);
-		// }
-		// item = item.substring(1);
-		// values.put("topic", item);
-		// dbHelper.insertTopic(values);
-		// }
+
+		DBHelper dbHelper = new DBHelper(getApplicationContext());
+		
+		// store topics
+		dbHelper.deleteTopic();
+		for (int i = 0; i < topicList.size(); i++) {
+			ContentValues values = new ContentValues();
+			HashMap<String, Object> map = topicList.get(i);
+			values.put("checked", (Boolean) map.get("checked"));
+			values.put("topic", (String) map.get(Data.TOPICS));
+			dbHelper.insertTopic(values);
+		}
+		
+		dbHelper.deleteNews();
+		storeNews(dbHelper, Data.internationalFavorList, "International");
+		storeNews(dbHelper, Data.localFavorList, "Local");
+		storeNews(dbHelper, Data.nationalFavorlList, "National");
+		storeNews(dbHelper, Data.sportFavorList, "Sports");
+		storeNews(dbHelper, Data.trendingFavorList, "Trending");
+	}
+	
+	private void storeNews(DBHelper dbHelper, 
+			List<HashMap<String, Object>> list,
+			String category) {
+		dbHelper.deleteNews();
+		System.out.println("store " + category);
+		for(int i = 0; i < list.size(); i++) {
+			ContentValues values = new ContentValues();
+			HashMap<String, Object> map = list.get(i);
+			System.out.println("store " + (String) map.get("news"));
+			values.put("news", (String) map.get("news"));
+			values.put("url", (String) map.get("url"));
+			values.put("image", (Integer) map.get("image"));
+			values.put("category", category);
+			dbHelper.insertNews(values);
+		}
 	}
 
 	public View createTabContent(String arg0) {

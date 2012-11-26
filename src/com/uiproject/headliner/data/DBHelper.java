@@ -1,4 +1,4 @@
-package com.uiproject.headliner;
+package com.uiproject.headliner.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 2;
 	private static final String DB_NAME = "HEADLINER";
 	private static final String TOPIC_TABLE_NAME = "TOPIC";
-	private static final String NEWS_TABLE_NAME = "NEWS";
+	private static final String NEWS_TABLE_NAME = "NEWS_Table";
 	private static final String TOPIC_TABLE_CREATE = "CREATE TABLE "
 			+ TOPIC_TABLE_NAME + " (" +
 			"id integer primary key autoincrement, checked INT, topic VARCHAR(50)" +
@@ -19,7 +19,10 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String NEWS_TABLE_CREATE = "CREATE TABLE "
 			+ NEWS_TABLE_NAME + " (" +
 			"id integer primary key autoincrement, " +
-			"favorite CHAR, title VARCHAR(50), abstract VARCHAR(200), date VARCHAR(20), url VARCHAR(100)" +
+			"news VARCHAR(200), " +
+			"url VARCHAR(100), " +
+			"category VARCHAR(20), "  +
+			"image INT " +
 			");";
 	
 	private SQLiteDatabase db; 
@@ -48,24 +51,32 @@ public class DBHelper extends SQLiteOpenHelper {
     }  
 	
     public void insertNews(ContentValues values) {  
-        SQLiteDatabase db = getWritableDatabase();  
+        SQLiteDatabase db = getWritableDatabase();
         db.insert(NEWS_TABLE_NAME, null, values);  
         db.close();  
     }  
     
     public Cursor queryTopic() {  
-        SQLiteDatabase db = getWritableDatabase();  
-        Cursor c = db.query(TOPIC_TABLE_NAME, null, null, null, null, null, null);  
+        SQLiteDatabase db = getReadableDatabase();  
+        Cursor c = db.query(TOPIC_TABLE_NAME, null, null, null, null, null, "id", null);  
         return c;  
     }
     
-    public Cursor queryNews() {  
-        SQLiteDatabase db = getWritableDatabase();  
-        Cursor c = db.query(NEWS_TABLE_NAME, null, null, null, null, null, null);  
+    public Cursor queryNews(String category) {  
+        SQLiteDatabase db = getReadableDatabase();  
+        Cursor c = db.query(NEWS_TABLE_NAME, 
+        		null, null, null, 
+        		null, null, null, null); 
         return c;  
     }  
     
     public void deleteTopic() {
-    	db.delete(TOPIC_TABLE_CREATE, null, null);
+    	SQLiteDatabase db = getWritableDatabase();
+    	db.delete(TOPIC_TABLE_NAME, null, null);
+    }
+    
+    public void deleteNews() {
+    	SQLiteDatabase db = getWritableDatabase();
+    	db.delete(NEWS_TABLE_NAME, null, null);
     }
 }

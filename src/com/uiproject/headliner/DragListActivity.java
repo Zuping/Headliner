@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.uiproject.headliner.data.Data;
 import com.uiproject.headliner.view.DragListView;
 
 import android.app.ActionBar;
@@ -61,20 +62,6 @@ public class DragListActivity extends Activity {
 		case R.id.done: {
 			Intent intent = new Intent(this, HomeActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			ArrayList<String> topicList = new ArrayList<String>();
-			for (int i = 0; i < mapList.size(); i++) {
-				HashMap<String, Object> map = mapList.get(i);
-				String stringItem = "";
-				if ((Boolean) map.get("checked"))
-					stringItem += 1;
-				else
-					stringItem += 0;
-				stringItem += map.get("topic");
-				topicList.add(stringItem);
-			}
-			Bundle bundle = new Bundle(0);
-			bundle.putStringArrayList(Data.TOPICS, topicList);
-			intent.putExtras(bundle);
 			startActivity(intent);
 			return true;
 		}

@@ -3,6 +3,8 @@ package com.uiproject.headliner;
 import java.util.HashMap;
 import java.util.List;
 
+import com.uiproject.headliner.data.Data;
+
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -210,7 +212,7 @@ public class HomeListFragment extends ListFragment {
 						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList.get(i);
 						
 						// compare title here
-						if(((String) _map.get("title")).equals((String) map.get("title")))
+						if(((String) _map.get("news")).equals((String) map.get("news")))
 							favoriteList.remove(_map);
 					}
 				}
@@ -221,7 +223,6 @@ public class HomeListFragment extends ListFragment {
 			public CheckBox starBox;
 			public TextView news;
 			public ImageView image;
-			public String url;
 		}
 
 	}

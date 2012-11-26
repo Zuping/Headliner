@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.uiproject.headliner.data.Data;
+
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -37,7 +39,9 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 		th.setOnTabChangedListener(tabChangeListener);
 		
 		for(int i = 0; i < topicList.size(); i++) {
-			String topic = (String) topicList.get(i).get(Data.TOPICS);
+			HashMap<String, Object> map = topicList.get(i);
+			if(!(Boolean) map.get("checked")) continue;
+			String topic = (String) map.get(Data.TOPICS);
 			TabSpec tabSpec = th.newTabSpec(topic);
 			tabSpec.setIndicator((String) topic);
 			tabSpec.setContent(this);
