@@ -181,8 +181,6 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 	private void storeNews(DBHelper dbHelper, 
 			List<HashMap<String, Object>> list,
 			String category) {
-		dbHelper.deleteNews();
-		System.out.println("store " + category);
 		for(int i = 0; i < list.size(); i++) {
 			ContentValues values = new ContentValues();
 			HashMap<String, Object> map = list.get(i);

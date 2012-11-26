@@ -14,15 +14,17 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String NEWS_TABLE_NAME = "NEWS_Table";
 	private static final String TOPIC_TABLE_CREATE = "CREATE TABLE "
 			+ TOPIC_TABLE_NAME + " (" +
-			"id integer primary key autoincrement, checked INT, topic VARCHAR(50)" +
+			"id integer primary key autoincrement, " +
+			"checked integer, " +
+			"topic VARCHAR(50)" +
 			");";
 	private static final String NEWS_TABLE_CREATE = "CREATE TABLE "
 			+ NEWS_TABLE_NAME + " (" +
 			"id integer primary key autoincrement, " +
-			"news VARCHAR(200), " +
-			"url VARCHAR(100), " +
-			"category VARCHAR(20), "  +
-			"image INT " +
+			"news VARCHAR(300), " +
+			"url VARCHAR(150), " +
+			"category VARCHAR(50), "  +
+			"image integer" +
 			");";
 	
 	private SQLiteDatabase db; 
@@ -53,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void insertNews(ContentValues values) {  
         SQLiteDatabase db = getWritableDatabase();
         db.insert(NEWS_TABLE_NAME, null, values);  
-        db.close();  
+        db.close();
     }  
     
     public Cursor queryTopic() {  
@@ -64,9 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
     
     public Cursor queryNews(String category) {  
         SQLiteDatabase db = getReadableDatabase();  
-        Cursor c = db.query(NEWS_TABLE_NAME, 
-        		null, null, null, 
-        		null, null, null, null); 
+        Cursor c = db.query(NEWS_TABLE_NAME, null, "category = ?", new String[] {category}, null, null, "id", null); 
         return c;  
     }  
     

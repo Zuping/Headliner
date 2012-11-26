@@ -67,10 +67,11 @@ public class Data {
 		while(c.moveToNext()) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			System.out.println(c.getString(1));
-			map.put("starBox", false);
+			map.put("starBox", true);
 			map.put("news", c.getString(1));
 			map.put("url", c.getString(2));
-			map.put("image", c.getInt(3));
+			map.put("image", c.getInt(4));
+//			System.out.println(c.getInt(3));
 			list.add(map);
 		}
 	}
