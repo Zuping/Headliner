@@ -82,6 +82,18 @@ public class HomeListFragment extends ListFragment {
 	}
 	
 	@Override
+	public void onResume() {
+		super.onResume();
+		if(topic.equals("Local")) {
+			newsList = Data.localList;
+			favoriteList = Data.localFavorList;
+			myAdapter.notifyDataSetChanged();
+			System.out.println();
+		}
+		
+	}
+
+	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		HashMap<String, Object> map = (HashMap<String, Object>) newsList
 				.get(position);

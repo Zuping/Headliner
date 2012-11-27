@@ -16,10 +16,12 @@ public class Data {
 	public static final String CHECKED = "checked";
 	public static String topics[] = { "Trending", "National", "International",
 			"Sports", "Local" };
+	
+	public static String location = "Minneapolis";
 
 	public static Boolean flag = true;
 
-	public static List<HashMap<String, Object>> topicList;
+	public static ArrayList<HashMap<String, Object>> topicList;
 
 	public static List<HashMap<String, Object>> trendingList;
 	public static List<HashMap<String, Object>> trendingFavorList;
@@ -203,6 +205,22 @@ public class Data {
 			if (news.indexOf(key) != -1) {
 				localSearchList.add(map);
 			}
+		}
+	}
+	
+	public static void changeLocation(String _location) {
+		location = _location;
+		
+		if(location.equals("Minneapolis")) {
+			localList = new ArrayList<HashMap<String, Object>>();
+			insert(localList, News.Local_News.StarTribune_Local_news,
+					News.Local_News.StarTribune_Local_url,
+					R.drawable.startribune_news);
+		} else {
+			localList = new ArrayList<HashMap<String, Object>>();
+			insert(localList, News.Local_News.other_local_news,
+					News.Local_News.other_local_url,
+					R.drawable.startribune_news);
 		}
 	}
 

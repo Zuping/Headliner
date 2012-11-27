@@ -200,15 +200,13 @@ public class HomeActivity extends TabActivity implements TabContentFactory, Loca
 	}
 	
 	public void showChangeLocationDialog() {
-        // Create an instance of the dialog fragment and show it
-		System.out.println("Create an instance of the dialog fragment and show it");
         DialogFragment dialog = new LocationDialogFragment();
         dialog.show(getFragmentManager(), "ChangeLocationDialogFragment");
     }
 
 	@Override
 	public void onDialogItemClick(int which) {
-		System.out.println(getResources().getStringArray(R.array.locations)[which]);
+		Data.changeLocation(getResources().getStringArray(R.array.locations)[which]);
 	}
 
 }

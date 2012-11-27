@@ -103,6 +103,14 @@ public class News {
 			"http://strib.mn/UylIqR",
 			"http://strib.mn/T572Oh"
 		};
+		
+		public static String other_local_news[] = {
+			"A single house stands in middle of highway as duck farmer goes up against city planners in China. Must-see photos"
+		};
+		
+		public static String other_local_url[] = {
+			"http://strib.mn/TlIW5l"
+		};
 	}
 	
 	public static final class National_News {
