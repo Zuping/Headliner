@@ -6,8 +6,10 @@ import java.util.List;
 import com.uiproject.headliner.data.Data;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ public class FavorListFragment extends ListFragment {
 	
 	private MyAdapter myAdapter;
 	private ListView listView;
+	private TextView textLocation;
 	
 	private List<HashMap<String, Object>> favoriteList;
 	
@@ -62,6 +65,30 @@ public class FavorListFragment extends ListFragment {
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		listView.setMultiChoiceModeListener(new ModeCallback());
 		registerForContextMenu(listView);
+		
+/*		View v = getView();
+		if(topic.equals(Data.topics[4]))
+			v.findViewById(R.id.locationLayout).setVisibility(android.view.View.VISIBLE);
+		
+		textLocation = (TextView) v.findViewById(R.id.textLocation);
+		Button changeLocation = (Button) v.findViewById(R.id.buttonChangeLocation);
+		changeLocation.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				new AlertDialog.Builder(getActivity())
+				.setTitle(R.string.choose_location)
+				.setItems(R.array.locations,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								Data.changeLocation(getResources().getStringArray(R.array.locations)[which]);
+								favoriteList = Data.localFavorList;
+								myAdapter.notifyDataSetChanged();
+								textLocation.setText(getResources().getStringArray(R.array.locations)[which]);
+							}
+						}).show();
+			}		
+		});*/
 	}
 	
 	@Override

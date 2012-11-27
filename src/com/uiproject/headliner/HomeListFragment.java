@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.uiproject.headliner.data.Data;
 
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ public class HomeListFragment extends ListFragment {
 	private String topic;
 	private MyAdapter myAdapter;
 	private ListView listView;
+	private TextView textLocation;
 	
 	private List<HashMap<String, Object>> newsList;
 	private List<HashMap<String, Object>> favoriteList;
@@ -68,29 +71,26 @@ public class HomeListFragment extends ListFragment {
 		if(topic.equals(Data.topics[4]))
 			v.findViewById(R.id.locationLayout).setVisibility(android.view.View.VISIBLE);
 		
+		textLocation = (TextView) v.findViewById(R.id.textLocation);
 		Button changeLocation = (Button) v.findViewById(R.id.buttonChangeLocation);
-		
 		changeLocation.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				((HomeActivity) getActivity()).showChangeLocationDialog();
-			}
-			
+				new AlertDialog.Builder(getActivity())
+				.setTitle(R.string.choose_location)
+				.setItems(R.array.locations,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								Data.changeLocation(getResources().getStringArray(R.array.locations)[which]);
+								newsList = Data.localList;
+								favoriteList = Data.localFavorList;
+								myAdapter.notifyDataSetChanged();
+								textLocation.setText(getResources().getStringArray(R.array.locations)[which]);
+							}
+						}).show();
+			}		
 		});
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		if(topic.equals("Local")) {
-			newsList = Data.localList;
-			favoriteList = Data.localFavorList;
-			myAdapter.notifyDataSetChanged();
-			System.out.println();
-		}
-		
 	}
 
 	@Override

@@ -27,7 +27,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 
-public class HomeActivity extends TabActivity implements TabContentFactory, LocationDialogFragment.LocationDialogListener {
+public class HomeActivity extends TabActivity implements TabContentFactory {
 
 	private TabHost th;
 	private List<HashMap<String, Object>> topicList;
@@ -197,16 +197,6 @@ public class HomeActivity extends TabActivity implements TabContentFactory, Loca
 	public View createTabContent(String arg0) {
 		View v = new View(getBaseContext());
 		return v;
-	}
-	
-	public void showChangeLocationDialog() {
-        DialogFragment dialog = new LocationDialogFragment();
-        dialog.show(getFragmentManager(), "ChangeLocationDialogFragment");
-    }
-
-	@Override
-	public void onDialogItemClick(int which) {
-		Data.changeLocation(getResources().getStringArray(R.array.locations)[which]);
 	}
 
 }
