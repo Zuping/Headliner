@@ -11,8 +11,12 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.BackgroundColorSpan;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +38,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 public class SearchListFragment extends ListFragment {
 	
 	private String topic;
+	private String query;
+	
 	private MyAdapter myAdapter;
 	private ListView listView;
 	private TextView textLocation;
@@ -43,8 +49,9 @@ public class SearchListFragment extends ListFragment {
 	
 	protected ActionMode mActionMode;
 	
-	public SearchListFragment(String _topic) {
+	public SearchListFragment(String _topic, String _query) {
 		topic = _topic;
+		query = _query;
 	}
 	
 	@Override
@@ -205,7 +212,13 @@ public class SearchListFragment extends ListFragment {
 				holder.starBox.setChecked(true);
 			else
 				holder.starBox.setChecked(false);
-			holder.news.setText((String) map.get("news"));
+			
+			String news = (String) map.get("news");
+			SpannableStringBuilder style = new SpannableStringBuilder(news);
+			int start = news.toLowerCase().indexOf(query.toLowerCase());
+			style.setSpan(new BackgroundColorSpan(Color.YELLOW), start, start + query.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE); 
+			holder.news.setText(style);
+			
 			holder.image.setImageResource((Integer)map.get("image"));
 			holder.starBox
 					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(map));

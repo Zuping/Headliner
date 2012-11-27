@@ -27,15 +27,15 @@ public class SearchableActivity extends TabActivity implements TabContentFactory
 	private TabHost th;
 	private List<HashMap<String, Object>> topicList;
 	
+	private String query;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         
         Intent intent = getIntent();
-        final String query = (String) intent.getCharSequenceExtra("query");
-        System.out.println(query);
-
+        query = (String) intent.getCharSequenceExtra("query");
         
         topicList = Data.topicList;
         Data.search(query);        
@@ -56,15 +56,13 @@ public class SearchableActivity extends TabActivity implements TabContentFactory
 						ft.detach(fragment);
 				}
 
-				System.out.println(tabId);
-
 				for (int i = 0; i < Data.topics.length; i++) {
 					if (tabId.equalsIgnoreCase(Data.topics[i])) {
 						SearchListFragment fragment = (SearchListFragment) fm
 								.findFragmentByTag(Data.topics[i]);
 						if (fragment == null) {
 							ft.add(android.R.id.tabcontent,
-									new SearchListFragment(Data.topics[i]),
+									new SearchListFragment(Data.topics[i], query),
 									Data.topics[i]);
 						} else {
 							ft.attach(fragment);
