@@ -15,7 +15,9 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.app.TabActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TabHost;
@@ -60,8 +62,52 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
 	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-	    searchView.setSubmitButtonEnabled(false);
-		return true;
+	    searchView.setSubmitButtonEnabled(true);
+		
+		final Intent searchintent = new Intent(this, SearchableActivity.class);
+
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				searchintent.putExtra("query", query);
+				startActivity(searchintent);
+				return true;
+			}
+
+		});
+	    
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home: {
+			Intent intent = new Intent(this, HomeActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		}
+		case R.id.favorite: {
+			Intent intent = new Intent(this, FavoriteActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		case R.id.menu_settings: {
+			Intent intent = new Intent(this, DragListActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	TabHost.OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
@@ -96,6 +142,8 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 			ft.commit();
 		}
 	};
+	
+	
 
 	public View createTabContent(String tag) {
 		View v = new View(getBaseContext());

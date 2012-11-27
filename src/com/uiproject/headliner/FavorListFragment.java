@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.uiproject.headliner.data.Data;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -16,8 +17,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -54,7 +57,7 @@ public class FavorListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 		listView = getListView();
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		listView.setMultiChoiceModeListener(new ModeCallback());
@@ -71,7 +74,6 @@ public class FavorListFragment extends ListFragment {
 	}
 	
 	public void getData() {
-//		System.out.println(topic);
 		if(topic.equals(Data.topics[0])) {
 			favoriteList = Data.trendingFavorList;
 		} else if(topic.equals(Data.topics[1])) {
@@ -217,7 +219,6 @@ public class FavorListFragment extends ListFragment {
 			public CheckBox starBox;
 			public TextView news;
 			public ImageView image;
-			public String url;
 		}
 
 	}

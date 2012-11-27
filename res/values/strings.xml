@@ -8,5 +8,12 @@
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="search_hint">keyword</string>
     <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="choose_location">Choose location:</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string-array name="locations">
+        <item>Minneapolis</item>
+        <item>Other place</item>
+    </string-array>
 
 </resources>

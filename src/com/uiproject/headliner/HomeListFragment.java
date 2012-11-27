@@ -17,7 +17,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -61,6 +63,22 @@ public class HomeListFragment extends ListFragment {
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		listView.setMultiChoiceModeListener(new ModeCallback());
 		registerForContextMenu(listView);
+		
+		View v = getView();
+		if(topic.equals(Data.topics[4]))
+			v.findViewById(R.id.locationLayout).setVisibility(android.view.View.VISIBLE);
+		
+		Button changeLocation = (Button) v.findViewById(R.id.buttonChangeLocation);
+		
+		changeLocation.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				((HomeActivity) getActivity()).showChangeLocationDialog();
+			}
+			
+		});
 	}
 	
 	@Override

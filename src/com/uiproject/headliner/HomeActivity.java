@@ -9,6 +9,7 @@ import com.uiproject.headliner.data.Data;
 
 import android.os.Bundle;
 import android.app.ActionBar;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
@@ -26,7 +27,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 
-public class HomeActivity extends TabActivity implements TabContentFactory {
+public class HomeActivity extends TabActivity implements TabContentFactory, LocationDialogFragment.LocationDialogListener {
 
 	private TabHost th;
 	private List<HashMap<String, Object>> topicList;
@@ -106,7 +107,7 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 				.setSearchableInfo(searchManager
 						.getSearchableInfo(new SearchableActivity()
 								.getComponentName()));
-		searchView.setIconifiedByDefault(false);
+		searchView.setIconifiedByDefault(true);
 
 		final Intent searchintent = new Intent(this, SearchableActivity.class);
 
@@ -197,4 +198,17 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		View v = new View(getBaseContext());
 		return v;
 	}
+	
+	public void showChangeLocationDialog() {
+        // Create an instance of the dialog fragment and show it
+		System.out.println("Create an instance of the dialog fragment and show it");
+        DialogFragment dialog = new LocationDialogFragment();
+        dialog.show(getFragmentManager(), "ChangeLocationDialogFragment");
+    }
+
+	@Override
+	public void onDialogItemClick(int which) {
+		System.out.println(getResources().getStringArray(R.array.locations)[which]);
+	}
+
 }

@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.uiproject.headliner.R;
-import com.uiproject.headliner.R.drawable;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 
 public class Data {
 
@@ -71,7 +69,6 @@ public class Data {
 			map.put("news", c.getString(1));
 			map.put("url", c.getString(2));
 			map.put("image", c.getInt(4));
-//			System.out.println(c.getInt(3));
 			list.add(map);
 		}
 	}
@@ -161,10 +158,12 @@ public class Data {
 	}
 
 	public static void search(String key) {
+		key = key.toLowerCase();
+		
 		trendingSearchList = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < trendingList.size(); i++) {
 			HashMap<String, Object> map = trendingList.get(i);
-			String news = (String) map.get("news");
+			String news = ((String) map.get("news")).toLowerCase();
 			if (news.indexOf(key) != -1) {
 				trendingSearchList.add(map);
 			}
@@ -173,7 +172,7 @@ public class Data {
 		nationalSearchlList = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < nationalList.size(); i++) {
 			HashMap<String, Object> map = nationalList.get(i);
-			String news = (String) map.get("news");
+			String news = ((String) map.get("news")).toLowerCase();
 			if (news.indexOf(key) != -1) {
 				nationalSearchlList.add(map);
 			}
@@ -182,7 +181,7 @@ public class Data {
 		internationalSearchList = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < internationalList.size(); i++) {
 			HashMap<String, Object> map = internationalList.get(i);
-			String news = (String) map.get("news");
+			String news = ((String) map.get("news")).toLowerCase();
 			if (news.indexOf(key) != -1) {
 				internationalSearchList.add(map);
 			}
@@ -191,7 +190,7 @@ public class Data {
 		sportSearchList = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < sportList.size(); i++) {
 			HashMap<String, Object> map = sportList.get(i);
-			String news = (String) map.get("news");
+			String news = ((String) map.get("news")).toLowerCase();
 			if (news.indexOf(key) != -1) {
 				sportSearchList.add(map);
 			}
@@ -200,7 +199,7 @@ public class Data {
 		localSearchList = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < localList.size(); i++) {
 			HashMap<String, Object> map = localList.get(i);
-			String news = (String) map.get("news");
+			String news = ((String) map.get("news")).toLowerCase();
 			if (news.indexOf(key) != -1) {
 				localSearchList.add(map);
 			}
