@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/activatedBackgroundIndicator"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" 
+    android:padding="5dp" >
 
     <CheckBox
         android:id="@+id/starCheckBox"
@@ -20,13 +21,15 @@
         android:layout_toRightOf="@+id/newsIcon"
         android:layout_centerVertical="true"
         android:focusable="false"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="16dp"
         android:text="Abstract" />
 
     <ImageView
         android:id="@+id/newsIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/starCheckBox"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_launcher" />
