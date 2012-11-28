@@ -115,7 +115,6 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				// TODO Auto-generated method stub
 				return false;
 			}
 

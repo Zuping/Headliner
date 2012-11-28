@@ -12,7 +12,7 @@
     <string name="cancel">Cancel</string>
     <string-array name="locations">
         <item>Minneapolis</item>
-        <item>Other place</item>
+        <item>Florida</item>
     </string-array>
 
 </resources>
