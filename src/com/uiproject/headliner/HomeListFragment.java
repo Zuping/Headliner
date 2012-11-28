@@ -270,7 +270,6 @@ public class HomeListFragment extends ListFragment {
 					}
 					notifyDataSetChanged();
 				}
-
 			}
 		}
 

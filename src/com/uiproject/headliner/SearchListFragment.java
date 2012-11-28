@@ -207,6 +207,21 @@ public class SearchListFragment extends ListFragment {
 			}
 			HashMap<String, Object> map = (HashMap<String, Object>) searchList
 					.get(position);
+			for (int i = 0; i < favoriteList.size(); i++) {
+				HashMap<String, Object> _map = favoriteList.get(i);
+				String _news = (String) _map.get("news");
+				String news = (String) map.get("news");
+
+				if (_news.equals(news)) {
+					System.out.println(_news);
+					System.out.println(news);
+
+					map.remove("starBox");
+					map.put("starBox", true);
+					break;
+				}
+			}
+			
 			if ((Boolean) map.get("starBox"))
 				holder.starBox.setChecked(true);
 			else
@@ -220,7 +235,7 @@ public class SearchListFragment extends ListFragment {
 			
 			holder.image.setImageResource((Integer)map.get("image"));
 			holder.starBox
-					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(map));
+					.setOnClickListener(new MyOnCheckedChangeListener(map));
 			return convertView;
 		}
 
@@ -233,7 +248,7 @@ public class SearchListFragment extends ListFragment {
 		}
 
 		private class MyOnCheckedChangeListener implements
-				OnCheckedChangeListener {
+		OnClickListener {
 
 			private HashMap<String, Object> map;
 
@@ -241,23 +256,28 @@ public class SearchListFragment extends ListFragment {
 				map = _map;
 			}
 
-			public void onCheckedChanged(CompoundButton checkbox,
-					boolean isChecked) {
+			@Override
+			public void onClick(View v) {
+				CheckBox checkbox = (CheckBox) v;
 				if (checkbox.isChecked()) {
 					map.remove("starBox");
 					map.put("starBox", true);
-					searchList.add(map);
+					favoriteList.add(map);
 				} else {
 					map.remove("starBox");
 					map.put("starBox", false);
-					for(int i = 0; i < searchList.size(); i++) {
-						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList.get(i);
-						
-						// compare title here
-						if(((String) _map.get("news")).equals((String) map.get("news")))
-							favoriteList.remove(_map);
+					for (int i = 0; i < favoriteList.size(); i++) {
+						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList
+								.get(i);
+
+						// compare news here
+						if (((String) _map.get("news")).equals((String) map
+								.get("news")))
+							favoriteList.remove(i);
 					}
+					notifyDataSetChanged();
 				}
+				
 			}
 		}
 
