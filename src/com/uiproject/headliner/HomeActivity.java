@@ -99,14 +99,12 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
+		
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search)
-				.getActionView();
-		searchView
-				.setSearchableInfo(searchManager
-						.getSearchableInfo(new SearchableActivity()
-								.getComponentName()));
+		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(new SearchableActivity().getComponentName()));
+		
 		searchView.setIconifiedByDefault(true);
 
 		final Intent searchintent = new Intent(this, SearchableActivity.class);
@@ -129,6 +127,7 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 
 		return true;
 	}
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

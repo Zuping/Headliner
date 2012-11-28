@@ -75,8 +75,8 @@ public class SearchListFragment extends ListFragment {
 		registerForContextMenu(listView);
 		
 		View v = getView();
-		if(topic.equals(Data.topics[4]))
-			v.findViewById(R.id.locationLayout).setVisibility(android.view.View.VISIBLE);
+//		if(topic.equals(Data.topics[4]))
+//			v.findViewById(R.id.locationLayout).setVisibility(android.view.View.VISIBLE);
 		
 		textLocation = (TextView) v.findViewById(R.id.textLocation);
 		Button changeLocation = (Button) v.findViewById(R.id.buttonChangeLocation);
