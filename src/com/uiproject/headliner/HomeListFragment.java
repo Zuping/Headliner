@@ -31,65 +31,73 @@ import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class HomeListFragment extends ListFragment {
-	
+
 	private String topic;
 	private MyAdapter myAdapter;
 	private ListView listView;
 	private TextView textLocation;
-	
+
 	private List<HashMap<String, Object>> newsList;
 	private List<HashMap<String, Object>> favoriteList;
-	
+
 	protected ActionMode mActionMode;
-	
+
 	public HomeListFragment(String _topic) {
 		topic = _topic;
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		
+
 		getData();
 		myAdapter = new MyAdapter(getActivity());
 		setListAdapter(myAdapter);
-		
+
 		return inflater.inflate(R.layout.activity_list, container, false);
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 		listView = getListView();
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		listView.setMultiChoiceModeListener(new ModeCallback());
 		registerForContextMenu(listView);
-		
+
 		View v = getView();
-		if(topic.equals(Data.topics[4]))
-			v.findViewById(R.id.locationLayout).setVisibility(android.view.View.VISIBLE);
-		
+		if (topic.equals(Data.topics[4]))
+			v.findViewById(R.id.locationLayout).setVisibility(
+					android.view.View.VISIBLE);
+
 		textLocation = (TextView) v.findViewById(R.id.textLocation);
-		Button changeLocation = (Button) v.findViewById(R.id.buttonChangeLocation);
+		textLocation.setText(Data.location);
+		Button changeLocation = (Button) v
+				.findViewById(R.id.buttonChangeLocation);
 		changeLocation.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				new AlertDialog.Builder(getActivity())
-				.setTitle(R.string.choose_location)
-				.setItems(R.array.locations,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								Data.changeLocation(getResources().getStringArray(R.array.locations)[which]);
-								newsList = Data.localList;
-								favoriteList = Data.localFavorList;
-								myAdapter.notifyDataSetChanged();
-								textLocation.setText(getResources().getStringArray(R.array.locations)[which]);
-							}
-						}).show();
-			}		
+						.setTitle(R.string.choose_location)
+						.setItems(R.array.locations,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int which) {
+										Data.changeLocation(getResources()
+												.getStringArray(
+														R.array.locations)[which]);
+										newsList = Data.localList;
+										favoriteList = Data.localFavorList;
+										myAdapter.notifyDataSetChanged();
+										textLocation
+												.setText(getResources()
+														.getStringArray(
+																R.array.locations)[which]);
+									}
+								}).show();
+			}
 		});
 	}
 
@@ -101,19 +109,18 @@ public class HomeListFragment extends ListFragment {
 		Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
 		startActivity(webIntent);
 	}
-	
-	
+
 	public void getData() {
-		if(topic.equals(Data.topics[0])) {
+		if (topic.equals(Data.topics[0])) {
 			newsList = Data.trendingList;
 			favoriteList = Data.trendingFavorList;
-		} else if(topic.equals(Data.topics[1])) {
+		} else if (topic.equals(Data.topics[1])) {
 			newsList = Data.nationalList;
 			favoriteList = Data.nationalFavorlList;
-		} else if(topic.equals(Data.topics[2])) {
+		} else if (topic.equals(Data.topics[2])) {
 			newsList = Data.internationalList;
 			favoriteList = Data.internationalFavorList;
-		} else if(topic.equals(Data.topics[3])) {
+		} else if (topic.equals(Data.topics[3])) {
 			newsList = Data.sportList;
 			favoriteList = Data.sportFavorList;
 		} else {
@@ -171,7 +178,7 @@ public class HomeListFragment extends ListFragment {
 			}
 		}
 	}
-	
+
 	private class MyAdapter extends BaseAdapter {
 
 		private LayoutInflater inflater;
@@ -201,14 +208,28 @@ public class HomeListFragment extends ListFragment {
 			}
 			HashMap<String, Object> map = (HashMap<String, Object>) newsList
 					.get(position);
+			for (int i = 0; i < favoriteList.size(); i++) {
+				HashMap<String, Object> _map = favoriteList.get(i);
+				String _news = (String) _map.get("news");
+				String news = (String) map.get("news");
+
+				if (_news.equals(news)) {
+					System.out.println(_news);
+					System.out.println(news);
+
+					map.remove("starBox");
+					map.put("starBox", true);
+					break;
+				}
+			}
 			if ((Boolean) map.get("starBox"))
 				holder.starBox.setChecked(true);
 			else
 				holder.starBox.setChecked(false);
 			holder.news.setText((String) map.get("news"));
-			holder.image.setImageResource((Integer)map.get("image"));
+			holder.image.setImageResource((Integer) map.get("image"));
 			holder.starBox
-					.setOnCheckedChangeListener(new MyOnCheckedChangeListener(map));
+					.setOnClickListener(new MyOnCheckedChangeListener(map));
 			return convertView;
 		}
 
@@ -220,8 +241,7 @@ public class HomeListFragment extends ListFragment {
 			return 0;
 		}
 
-		private class MyOnCheckedChangeListener implements
-				OnCheckedChangeListener {
+		private class MyOnCheckedChangeListener implements OnClickListener {
 
 			private HashMap<String, Object> map;
 
@@ -229,8 +249,9 @@ public class HomeListFragment extends ListFragment {
 				map = _map;
 			}
 
-			public void onCheckedChanged(CompoundButton checkbox,
-					boolean isChecked) {
+			@Override
+			public void onClick(View v) {
+				CheckBox checkbox = (CheckBox) v;
 				if (checkbox.isChecked()) {
 					map.remove("starBox");
 					map.put("starBox", true);
@@ -238,14 +259,18 @@ public class HomeListFragment extends ListFragment {
 				} else {
 					map.remove("starBox");
 					map.put("starBox", false);
-					for(int i = 0; i < favoriteList.size(); i++) {
-						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList.get(i);
-						
-						// compare title here
-						if(((String) _map.get("news")).equals((String) map.get("news")))
-							favoriteList.remove(_map);
+					for (int i = 0; i < favoriteList.size(); i++) {
+						HashMap<String, Object> _map = (HashMap<String, Object>) favoriteList
+								.get(i);
+
+						// compare news here
+						if (((String) _map.get("news")).equals((String) map
+								.get("news")))
+							favoriteList.remove(i);
 					}
+					notifyDataSetChanged();
 				}
+
 			}
 		}
 

@@ -117,41 +117,53 @@ public class Data {
 
 		// insert national news
 		insert(nationalList, News.National_News.CNN_National_news,
-				News.National_News.CNN_National_url, R.drawable.cnn_news);
+				News.National_News.CNN_National_url, R.drawable.cnn_news,
+				nationalFavorlList);
 		insert(nationalList, News.National_News.FoxNews_National_news,
-				News.National_News.FoxNews_National_url, R.drawable.fox_news);
+				News.National_News.FoxNews_National_url, R.drawable.fox_news,
+				nationalFavorlList);
 		insert(nationalList, News.National_News.newyorktimes_National_news,
 				News.National_News.newyorktimes_National_url,
-				R.drawable.thenewyorktimes_news);
+				R.drawable.thenewyorktimes_news,
+				nationalFavorlList);
 		insert(nationalList, News.National_News.WashingtonPost_National_news,
 				News.National_News.WashingtonPost_National_url,
-				R.drawable.wpt_news);
+				R.drawable.wpt_news,
+				nationalFavorlList);
 
 		// insert local news
 		insert(localList, News.Local_News.StarTribune_Local_news,
 				News.Local_News.StarTribune_Local_url,
-				R.drawable.startribune_news);
+				R.drawable.startribune_news,
+				localFavorList);
 
 		// insert international news
 		insert(internationalList, News.World_News.ABC_world_news,
-				News.World_News.ABC_world_url, R.drawable.abc_world_news);
+				News.World_News.ABC_world_url, R.drawable.abc_world_news,
+				internationalFavorList);
 		insert(internationalList, News.World_News.BBC_world_news,
-				News.World_News.BBC_world_url, R.drawable.bbc_world_news);
+				News.World_News.BBC_world_url, R.drawable.bbc_world_news,
+				internationalFavorList);
 		insert(internationalList, News.World_News.Bloomberg_World_news,
-				News.World_News.Bloomberg_World_url, R.drawable.bloomberg_news);
+				News.World_News.Bloomberg_World_url, R.drawable.bloomberg_news,
+				internationalFavorList);
 		insert(internationalList, News.World_News.CBSnews_world_news,
-				News.World_News.CBSnews_world_url, R.drawable.cbs_news);
+				News.World_News.CBSnews_world_url, R.drawable.cbs_news,
+				internationalFavorList);
 		insert(internationalList, News.World_News.CNN_world_news,
-				News.World_News.CNN_world_url, R.drawable.cnn_world_news);
+				News.World_News.CNN_world_url, R.drawable.cnn_world_news,
+				internationalFavorList);
 		insert(internationalList, News.World_News.Reuters_World_news,
-				News.World_News.Reuters_World_url, R.drawable.reuters);
+				News.World_News.Reuters_World_url, R.drawable.reuters,
+				internationalFavorList);
 	}
 
 	private static void insert(List<HashMap<String, Object>> list,
-			String[] news, String[] url, int drawable) {
+			String[] news, String[] url, int drawable, 
+			List<HashMap<String, Object>> favorList) {
 		for (int i = 0; i < news.length; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("starBox", false);
+			map.put("starBox", false);		
 			map.put("news", news[i]);
 			map.put("url", url[i]);
 			map.put("image", (Integer) drawable);
@@ -215,12 +227,14 @@ public class Data {
 			localList = new ArrayList<HashMap<String, Object>>();
 			insert(localList, News.Local_News.StarTribune_Local_news,
 					News.Local_News.StarTribune_Local_url,
-					R.drawable.startribune_news);
+					R.drawable.startribune_news,
+					localFavorList);
 		} else {
 			localList = new ArrayList<HashMap<String, Object>>();
 			insert(localList, News.Local_News.local_10_WPLG_News,
 					News.Local_News.local_10_WPLG_url,
-					R.drawable.local10_wplgnews);
+					R.drawable.local10_wplgnews,
+					localFavorList);
 		}
 	}
 
