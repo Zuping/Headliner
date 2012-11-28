@@ -104,12 +104,26 @@ public class News {
 			"http://strib.mn/T572Oh"
 		};
 		
-		public static String other_local_news[] = {
-			"A single house stands in middle of highway as duck farmer goes up against city planners in China. Must-see photos"
+		public static String local_10_WPLG_News[] = {
+			"This 80-year-old woman did what? Read this story and find out why she spent two days in jail.",
+			"A man dies in a police-involved shooting in southwest Miami-Dade.",
+			"#Art #Basel kicks off Dec 6 http://bit.ly/WWZenL  #MiamiBeach",
+			"Cops: #Drunk man kills 2 #ducks http://bit.ly/V0hTJ9  #delraybeach",
+			"Retailer turning #Christmas #trees upside down",
+			"Defense asks for a mistrial in the Rilya Wilson murder case.",
+			"#Creepy or #Cool? #Obese mannequin disturbs shoppers.",
+			"The @MiamiDolphins #cheerleaders take the field."
 		};
 		
-		public static String other_local_url[] = {
-			"http://strib.mn/TlIW5l"
+		public static String local_10_WPLG_url[] = {
+			"http://bit.ly/Vcz93S",
+			"http://bit.ly/TsaYMC",
+			"http://bit.ly/WWZenL",
+			"http://bit.ly/V0hTJ9",
+			"http://bit.ly/TjsDCy",
+			"http://bit.ly/TsiAOj",
+			"http://bit.ly/V4ftcE",
+			"http://bit.ly/QJa4wd "
 		};
 	}
 	

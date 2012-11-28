@@ -7,7 +7,6 @@ import com.uiproject.headliner.data.Data;
 
 import android.os.Bundle;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
@@ -99,7 +98,7 @@ public class SearchableActivity extends TabActivity implements TabContentFactory
 	    SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
 	    System.out.println("haha" + getComponentName());
 	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-	    searchView.setIconifiedByDefault(false);
+	    searchView.setIconifiedByDefault(true);
 	    
 	    final Intent searchintent = new Intent(this, SearchableActivity.class);
 	    

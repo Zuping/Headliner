@@ -1,6 +1,5 @@
 package com.uiproject.headliner;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,8 +7,6 @@ import com.uiproject.headliner.data.Data;
 
 import android.os.Bundle;
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
@@ -56,7 +53,7 @@ public class FavoriteActivity extends TabActivity implements TabContentFactory {
 		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.context_menu, menu);
 		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 		
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);

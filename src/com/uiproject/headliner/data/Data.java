@@ -218,9 +218,9 @@ public class Data {
 					R.drawable.startribune_news);
 		} else {
 			localList = new ArrayList<HashMap<String, Object>>();
-			insert(localList, News.Local_News.other_local_news,
-					News.Local_News.other_local_url,
-					R.drawable.startribune_news);
+			insert(localList, News.Local_News.local_10_WPLG_News,
+					News.Local_News.local_10_WPLG_url,
+					R.drawable.local10_wplgnews);
 		}
 	}
 

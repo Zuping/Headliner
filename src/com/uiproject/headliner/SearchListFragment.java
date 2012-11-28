@@ -6,7 +6,6 @@ import java.util.List;
 import com.uiproject.headliner.data.Data;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
