@@ -14,6 +14,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.app.TabActivity;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -103,7 +104,8 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(new SearchableActivity().getComponentName()));
+		ComponentName c = getComponentName();
+		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		
 		searchView.setIconifiedByDefault(true);
 
@@ -183,7 +185,6 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		for(int i = 0; i < list.size(); i++) {
 			ContentValues values = new ContentValues();
 			HashMap<String, Object> map = list.get(i);
-			System.out.println("store " + (String) map.get("news"));
 			values.put("news", (String) map.get("news"));
 			values.put("url", (String) map.get("url"));
 			values.put("image", (Integer) map.get("image"));
