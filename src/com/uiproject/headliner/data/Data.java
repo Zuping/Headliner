@@ -23,7 +23,8 @@ public class Data {
 
 	public static ArrayList<HashMap<String, Object>> topicList;
 
-	public static List<HashMap<String, Object>> trendingList;
+	public static List<String> trendingTopics;
+	public static List<List<HashMap<String, Object>>> trendingChildList;
 	public static List<HashMap<String, Object>> trendingFavorList;
 	public static List<HashMap<String, Object>> trendingSearchList;
 
@@ -95,7 +96,30 @@ public class Data {
 			}
 		}
 
-		trendingList = new ArrayList<HashMap<String, Object>>();
+		trendingTopics = new ArrayList<String>();
+		for(int i = 0; i < News.Trending_News.trending_topics.length; i++) {
+			trendingTopics.add(News.Trending_News.trending_topics[i]);
+		}
+		trendingChildList = new ArrayList<List<HashMap<String, Object>>>();
+		
+		ArrayList<HashMap<String, Object>> trendingChildItem = new ArrayList<HashMap<String, Object>>();
+		insert(trendingChildItem, News.Trending_News.Fiscal_Cliff_news,
+				News.Trending_News.Fiscal_Cliff_url, R.drawable.ic_launcher,
+				trendingFavorList);
+		trendingChildList.add(trendingChildItem);
+		
+		trendingChildItem = new ArrayList<HashMap<String, Object>>();
+		insert(trendingChildItem, News.Trending_News.Kate_Middleton_news,
+				News.Trending_News.Kate_Middleton_url, R.drawable.ic_launcher,
+				trendingFavorList);
+		trendingChildList.add(trendingChildItem);
+		
+		trendingChildItem = new ArrayList<HashMap<String, Object>>();
+		insert(trendingChildItem, News.Trending_News.Mall_Shooting_news,
+				News.Trending_News.Mall_Shooting_urls, R.drawable.ic_launcher,
+				trendingFavorList);
+		trendingChildList.add(trendingChildItem);
+		
 		trendingFavorList = new ArrayList<HashMap<String, Object>>();
 		searchDBFavor(dbHelper, trendingFavorList, "Trending");
 		
@@ -174,14 +198,14 @@ public class Data {
 	public static void search(String key) {
 		key = key.toLowerCase();
 		
-		trendingSearchList = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < trendingList.size(); i++) {
-			HashMap<String, Object> map = trendingList.get(i);
-			String news = ((String) map.get("news")).toLowerCase();
-			if (news.indexOf(key) != -1) {
-				trendingSearchList.add(map);
-			}
-		}
+//		trendingSearchList = new ArrayList<HashMap<String, Object>>();
+//		for (int i = 0; i < trendingList.size(); i++) {
+//			HashMap<String, Object> map = trendingList.get(i);
+//			String news = ((String) map.get("news")).toLowerCase();
+//			if (news.indexOf(key) != -1) {
+//				trendingSearchList.add(map);
+//			}
+//		}
 
 		nationalSearchlList = new ArrayList<HashMap<String, Object>>();
 		for (int i = 0; i < nationalList.size(); i++) {

@@ -57,16 +57,20 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 						ft.detach(fragment);
 				}
 
-				System.out.println(tabId);
-
 				for (int i = 0; i < Data.topics.length; i++) {
 					if (tabId.equalsIgnoreCase(Data.topics[i])) {
 						HomeListFragment fragment = (HomeListFragment) fm
 								.findFragmentByTag(Data.topics[i]);
 						if (fragment == null) {
-							ft.add(android.R.id.tabcontent,
-									new HomeListFragment(Data.topics[i]),
-									Data.topics[i]);
+							if (tabId.equals("Trending")) {
+								ft.add(android.R.id.tabcontent,
+										new TrendingFragment(),
+										Data.topics[i]);
+							} else {
+								ft.add(android.R.id.tabcontent,
+										new HomeListFragment(Data.topics[i]),
+										Data.topics[i]);
+							}
 						} else {
 							ft.attach(fragment);
 						}
@@ -100,13 +104,14 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
-		
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search)
+				.getActionView();
 		ComponentName c = getComponentName();
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-		
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
+
 		searchView.setIconifiedByDefault(true);
 
 		final Intent searchintent = new Intent(this, SearchableActivity.class);
@@ -129,7 +134,6 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 
 		return true;
 	}
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -160,7 +164,7 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		super.onDestroy();
 
 		DBHelper dbHelper = new DBHelper(getApplicationContext());
-		
+
 		// store topics
 		dbHelper.deleteTopic();
 		for (int i = 0; i < topicList.size(); i++) {
@@ -170,7 +174,7 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 			values.put("topic", (String) map.get(Data.TOPICS));
 			dbHelper.insertTopic(values);
 		}
-		
+
 		dbHelper.deleteNews();
 		storeNews(dbHelper, Data.internationalFavorList, "International");
 		storeNews(dbHelper, Data.localFavorList, "Local");
@@ -178,11 +182,10 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 		storeNews(dbHelper, Data.sportFavorList, "Sports");
 		storeNews(dbHelper, Data.trendingFavorList, "Trending");
 	}
-	
-	private void storeNews(DBHelper dbHelper, 
-			List<HashMap<String, Object>> list,
-			String category) {
-		for(int i = 0; i < list.size(); i++) {
+
+	private void storeNews(DBHelper dbHelper,
+			List<HashMap<String, Object>> list, String category) {
+		for (int i = 0; i < list.size(); i++) {
 			ContentValues values = new ContentValues();
 			HashMap<String, Object> map = list.get(i);
 			values.put("news", (String) map.get("news"));

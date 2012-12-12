@@ -23,12 +23,10 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class HomeListFragment extends ListFragment {
 
@@ -112,8 +110,7 @@ public class HomeListFragment extends ListFragment {
 
 	public void getData() {
 		if (topic.equals(Data.topics[0])) {
-			newsList = Data.trendingList;
-			favoriteList = Data.trendingFavorList;
+
 		} else if (topic.equals(Data.topics[1])) {
 			newsList = Data.nationalList;
 			favoriteList = Data.nationalFavorlList;

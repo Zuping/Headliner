@@ -197,4 +197,51 @@ public class News {
 			"http://wapo.st/UijcH6"
 		};
 	}
+
+	public static final class Trending_News {
+		
+		public static String trending_topics[] = {
+			"Fiscal Cliff", 
+			"Kate Middleton",
+			"Mall Shooting"
+		};
+		
+		public static String Fiscal_Cliff_news[] = {
+			"Congress receives a letter signed by 180 economists opposing tax increases as part of a fiscal cliff",
+			"\"95% of the people who are talking about it have no clue\" @BlackRock CEO Larry Fink on the fiscal cliff",
+			"Boehner Sends 'Fiscal Cliff' Counteroffer To White House"
+		};
+		
+		public static String Fiscal_Cliff_url[] = {
+			"http://politi.co/VyNIJz",
+			"http://bloom.bg/U3las9",
+			"http://n.pr/ZcxuME"
+		};
+		
+		public static String Kate_Middleton_news[] = {
+			"The Kate Middleton scandal takes another ominous turn",
+			"Hoaxed Kate Middleton nurse left suicide note",
+			"Australian radio station donates ad profits from Middleton prank call to nurse Jacintha Saldanha's family."
+		};
+		
+		public static String Kate_Middleton_url[] = {
+			"http://huff.to/X57i19",
+			"http://thebea.st/YXBimg",
+			"http://nym.ag/UxaaSc"
+		};
+		
+		public static String Mall_Shooting_news[] = {
+			"BREAKING: Police: At least 1 dead, multiple people wounded in mall shooting; shooter \"neutralized.\"",
+			"At least four wounded in shooting at Oregon mall: authorities",
+			"UPDATE: Police say at least four people have been wounded in a shooting at an Oregon mall"
+		};
+		
+		public static String Mall_Shooting_urls[] = {
+			"http://www.katu.com/news/local/Shooting-Clackamas-Town-Center-183077691.html",
+			"http://reut.rs/TTBtd3",
+			"http://yhoo.it/VSyMMd"
+		};
+		 
+	}
+	
 }

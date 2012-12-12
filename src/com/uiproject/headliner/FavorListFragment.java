@@ -102,7 +102,7 @@ public class FavorListFragment extends ListFragment {
 	
 	public void getData() {
 		if(topic.equals(Data.topics[0])) {
-			favoriteList = Data.trendingFavorList;
+			
 		} else if(topic.equals(Data.topics[1])) {
 			favoriteList = Data.nationalFavorlList;
 		} else if(topic.equals(Data.topics[2])) {

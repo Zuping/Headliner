@@ -111,8 +111,7 @@ public class SearchListFragment extends ListFragment {
 	
 	public void getData() {
 		if(topic.equals(Data.topics[0])) {
-			searchList = Data.trendingSearchList;
-			favoriteList = Data.trendingFavorList;
+
 		} else if(topic.equals(Data.topics[1])) {
 			searchList = Data.nationalSearchlList;
 			favoriteList = Data.nationalFavorlList;
