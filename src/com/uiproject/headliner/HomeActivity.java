@@ -10,6 +10,7 @@ import com.uiproject.headliner.data.Data;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
@@ -51,16 +52,14 @@ public class HomeActivity extends TabActivity implements TabContentFactory {
 				FragmentTransaction ft = fm.beginTransaction();
 
 				for (int i = 0; i < Data.topics.length; i++) {
-					HomeListFragment fragment = (HomeListFragment) fm
-							.findFragmentByTag(Data.topics[i]);
+					Fragment fragment =  fm.findFragmentByTag(Data.topics[i]);
 					if (fragment != null)
 						ft.detach(fragment);
 				}
 
 				for (int i = 0; i < Data.topics.length; i++) {
 					if (tabId.equalsIgnoreCase(Data.topics[i])) {
-						HomeListFragment fragment = (HomeListFragment) fm
-								.findFragmentByTag(Data.topics[i]);
+						Fragment fragment = fm.findFragmentByTag(Data.topics[i]);
 						if (fragment == null) {
 							if (tabId.equals("Trending")) {
 								ft.add(android.R.id.tabcontent,
